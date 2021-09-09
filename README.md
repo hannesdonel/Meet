@@ -33,7 +33,7 @@ This is an application that provides you information on events in a specific tow
    **When** the user selects a city (e.g., “Berlin, Germany”) from the list  
    **Then** their city will change to that city (i.e., “Berlin, Germany”) and the user will receive a list of upcoming events   in that city
 
-**<ins>3. Feature: Show/hide an event's details</ins>**
+**<ins>2. Feature: Show/hide an event's details</ins>**
 
 
    As a **user**  
@@ -58,7 +58,7 @@ This is an application that provides you information on events in a specific tow
    **When** the user clicks on that expanded element  
    **Then** it’s going collapse and hide its details.  
 
-**<ins>4. Feature: Specify number of events</ins>**
+**<ins>3. Feature: Specify number of events</ins>**
 
 
    As a **user**  
@@ -77,7 +77,7 @@ This is an application that provides you information on events in a specific tow
    **When** the user changes the number of events to be displayed  
    **Then** a maximum by that number of events will be shown  
 
-**<ins>5. Feature: Use the app when offline</ins>**
+**<ins>4. Feature: Use the app when offline</ins>**
 
 
    As a **user**  
@@ -96,7 +96,7 @@ This is an application that provides you information on events in a specific tow
    **When** the user changes the values for either city or time  
    **Then** an error will be thrown that its not possible to fetch new data without an internet connection  
 
-**<ins>1. Feature: Data visualization</ins>**
+**<ins>5. Feature: Data visualization</ins>**
 
 
    As a **user**  
