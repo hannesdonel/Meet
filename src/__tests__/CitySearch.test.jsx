@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CitySearch from '../CitySearch';
-import { mockData } from '../mock-data';
+import mockData from '../mock-data';
 import { extractLocations } from '../api';
 
 describe('<CitySearch /> component', () => {
@@ -9,7 +9,7 @@ describe('<CitySearch /> component', () => {
   let CitySearchWrapper;
   beforeAll(() => {
     locations = extractLocations(mockData);
-    CitySearchWrapper = shallow(<CitySearch locations={locations} />);
+    CitySearchWrapper = shallow(<CitySearch locations={locations} updateEvents={() => {}} />);
   });
 
   test('render search input', () => {
@@ -58,14 +58,26 @@ describe('<CitySearch /> component', () => {
   test('selecting a suggestion should change query state with click', () => {
     CitySearchWrapper.setState({ query: 'Berlin' });
     const suggestions = CitySearchWrapper.state('suggestions');
-    CitySearchWrapper.find('.city-search__suggestions button').at(0).simulate('click');
+    CitySearchWrapper.find('.city-search__button').at(0).simulate('click');
     expect(CitySearchWrapper.state('query')).toBe(suggestions[0]);
   });
 
   test('selecting a suggestion should change query state with key down', () => {
     CitySearchWrapper.setState({ query: 'Berlin' });
     const suggestions = CitySearchWrapper.state('suggestions');
-    CitySearchWrapper.find('.city-search__suggestions button').at(0).simulate('keyDown');
+    CitySearchWrapper.find('.city-search__button').at(0).simulate('keyDown');
     expect(CitySearchWrapper.state('query')).toBe(suggestions[0]);
+  });
+
+  test('selecting "show all" should change query state with click', () => {
+    CitySearchWrapper.setState({ query: '' });
+    CitySearchWrapper.find('.city-search__all-button').at(0).simulate('click');
+    expect(CitySearchWrapper.state('query')).toBe('all');
+  });
+
+  test('selecting "show all" should change query state with key down', () => {
+    CitySearchWrapper.setState({ query: '' });
+    CitySearchWrapper.find('.city-search__all-button').at(0).simulate('keyDown');
+    expect(CitySearchWrapper.state('query')).toBe('all');
   });
 });
