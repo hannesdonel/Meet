@@ -7,6 +7,7 @@ module.exports = {
     'plugin:react/recommended',
     'airbnb',
   ],
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -24,5 +25,18 @@ module.exports = {
       optionalDependencies: false,
       peerDependencies: false,
     }],
+    'react/require-default-props': 'off',
+    'react/prop-types': 'off',
   },
+  overrides: [
+    {
+      files: [
+        '**/*.test.js',
+        '**/*.test.jsx',
+      ],
+      env: {
+        jest: true,
+      },
+    },
+  ],
 };
