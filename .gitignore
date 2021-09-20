@@ -30,4 +30,4 @@ client_secret_241069963999-3f5r6pme62aef0knraf73pn34oommrdi.apps.googleuserconte
 rootkey.csv
 
 test
-**/.serverless/
+.serverless
