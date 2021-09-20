@@ -29,9 +29,10 @@ describe('<CitySearch /> component', () => {
     CitySearchWrapper.setState({
       query: 'Munich',
     });
-    const eventObject = { target: { value: 'Berlin' } };
+    const city = 'Hamburg';
+    const eventObject = { target: { value: city } };
     CitySearchWrapper.find('.city-search__input').simulate('change', eventObject);
-    expect(CitySearchWrapper.state('query')).toBe('Berlin');
+    expect(CitySearchWrapper.state('query')).toBe(city);
   });
 
   test('render list of suggestions correctly', () => {
@@ -54,10 +55,17 @@ describe('<CitySearch /> component', () => {
     expect(CitySearchWrapper.state('suggestions')).toEqual(filteredLocations);
   });
 
-  test('selecting a suggestion should change query state', () => {
+  test('selecting a suggestion should change query state with click', () => {
     CitySearchWrapper.setState({ query: 'Berlin' });
     const suggestions = CitySearchWrapper.state('suggestions');
     CitySearchWrapper.find('.city-search__suggestions button').at(0).simulate('click');
+    expect(CitySearchWrapper.state('query')).toBe(suggestions[0]);
+  });
+
+  test('selecting a suggestion should change query state with key down', () => {
+    CitySearchWrapper.setState({ query: 'Berlin' });
+    const suggestions = CitySearchWrapper.state('suggestions');
+    CitySearchWrapper.find('.city-search__suggestions button').at(0).simulate('keyDown');
     expect(CitySearchWrapper.state('query')).toBe(suggestions[0]);
   });
 });
