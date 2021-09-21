@@ -5,6 +5,7 @@ import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 
 import { extractLocations, getEvents } from './api';
+import './nprogress.css';
 
 class App extends Component {
   constructor() {
@@ -31,7 +32,7 @@ class App extends Component {
 
   updateEvents = (location) => {
     getEvents().then((events) => {
-      const locationEvents = (location === 'all') ? events : events.filter((event) => event.location === location);
+      const locationEvents = (location === '') ? events : events.filter((event) => event.location === location);
       this.setState({
         events: locationEvents,
       });

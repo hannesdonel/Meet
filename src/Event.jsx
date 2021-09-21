@@ -25,7 +25,7 @@ class Event extends Component {
           <li className="event__summary">{event.summary}</li>
           <li className="event__location">{event.location}</li>
           <li className="event__date">
-            start:
+            Start:
             {event.start.dateTime}
             {' '}
             - Time Zone:
@@ -49,7 +49,7 @@ class Event extends Component {
             className="event__show-less-button"
             onClick={() => this.toggleShow()}
           >
-            hide details
+            Hide details
           </button>
           )}
         </ul>

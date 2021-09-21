@@ -7,16 +7,18 @@ class CitySearch extends Component {
     this.state = {
       query: '',
       suggestions: [],
+      showSuggestions: undefined,
     };
   }
 
   handleInputChange = (value) => {
     const { locations } = this.props;
-    const suggestions = locations
+    const suggestionsToSet = locations
       .filter((location) => location.toUpperCase().indexOf(value.toUpperCase()) > -1);
     this.setState({
       query: value,
-      suggestions,
+      suggestions: suggestionsToSet,
+      showSuggestions: true,
     });
   }
 
@@ -25,11 +27,12 @@ class CitySearch extends Component {
     updateEvents(suggestion);
     this.setState({
       query: suggestion,
+      showSuggestions: false,
     });
   }
 
   render() {
-    const { query, suggestions } = this.state;
+    const { query, suggestions, showSuggestions } = this.state;
 
     return (
       <div className="city-search">
@@ -38,8 +41,12 @@ class CitySearch extends Component {
           className="city-search__input"
           value={query}
           onChange={(e) => this.handleInputChange(e.target.value)}
+          onFocus={() => this.setState({ showSuggestions: true })}
         />
-        <ul className="city-search__suggestions">
+        <ul
+          className="city-search__suggestions"
+          style={showSuggestions ? {} : { display: 'none' }}
+        >
           {suggestions.map((suggestion) => (
             <li
               key={suggestion}
@@ -58,8 +65,8 @@ class CitySearch extends Component {
             <button
               type="button"
               className="city-search__all-button"
-              onClick={() => this.handleSuggestionClick('all')}
-              onKeyDown={() => this.handleSuggestionClick('all')}
+              onClick={() => this.handleSuggestionClick('')}
+              onKeyDown={() => this.handleSuggestionClick('')}
             >
               <b>See all cities</b>
 
