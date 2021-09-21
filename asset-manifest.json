@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/go-out-with-me/static/css/main.689d03c2.chunk.css",
-    "main.js": "/go-out-with-me/static/js/main.280f04ca.chunk.js",
-    "main.js.map": "/go-out-with-me/static/js/main.280f04ca.chunk.js.map",
+    "main.css": "/go-out-with-me/static/css/main.b7545255.chunk.css",
+    "main.js": "/go-out-with-me/static/js/main.0ec5eedc.chunk.js",
+    "main.js.map": "/go-out-with-me/static/js/main.0ec5eedc.chunk.js.map",
     "runtime-main.js": "/go-out-with-me/static/js/runtime-main.b4ab3ccf.js",
     "runtime-main.js.map": "/go-out-with-me/static/js/runtime-main.b4ab3ccf.js.map",
     "static/js/2.e9942c42.chunk.js": "/go-out-with-me/static/js/2.e9942c42.chunk.js",
@@ -12,13 +12,13 @@
     "index.html": "/go-out-with-me/index.html",
     "service-worker.js": "/go-out-with-me/service-worker.js",
     "service-worker.js.map": "/go-out-with-me/service-worker.js.map",
-    "static/css/main.689d03c2.chunk.css.map": "/go-out-with-me/static/css/main.689d03c2.chunk.css.map",
+    "static/css/main.b7545255.chunk.css.map": "/go-out-with-me/static/css/main.b7545255.chunk.css.map",
     "static/js/2.e9942c42.chunk.js.LICENSE.txt": "/go-out-with-me/static/js/2.e9942c42.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.b4ab3ccf.js",
     "static/js/2.e9942c42.chunk.js",
-    "static/css/main.689d03c2.chunk.css",
-    "static/js/main.280f04ca.chunk.js"
+    "static/css/main.b7545255.chunk.css",
+    "static/js/main.0ec5eedc.chunk.js"
   ]
 }
