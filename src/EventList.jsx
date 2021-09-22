@@ -4,7 +4,7 @@ import Event from './Event';
 const EventList = ({ events }) => (
   <ul className="event-list">
     {events.map((event) => (
-      <li key={event.id}>
+      <li className="event-list__item" key={event.id}>
         <Event event={event} />
       </li>
     ))}

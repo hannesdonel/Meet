@@ -88,6 +88,9 @@ describe('<CitySearch /> component', () => {
     CitySearchWrapper.find('.city-search__input').simulate('focus');
     expect(CitySearchWrapper.state('showSuggestions')).toBe(true);
     expect(CitySearchWrapper.find('.city-search__suggestions').prop('style')).not.toEqual({ display: 'none' });
+    CitySearchWrapper.find('.city-search__input').simulate('blur');
+    setTimeout(() => expect(CitySearchWrapper.state('showSuggestions')).toBe(false), 15);
+    expect(Object.keys(CitySearchWrapper.find('.city-search__suggestions'))).toHaveLength(0);
   });
 
   test('selecting a suggestion should hide the suggestions list', () => {
