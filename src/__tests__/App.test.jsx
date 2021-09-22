@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import renderer from 'react-test-renderer';
 import App from '../App';
 import EventList from '../EventList';
 import CitySearch from '../CitySearch';
-import NumberOfEvents from '../NumberOfEvents';
 
 import mockData from '../mock-data';
 import { extractLocations, getEvents } from '../api';
@@ -14,16 +14,13 @@ describe('<App /> component', () => {
     AppWrapper = shallow(<App />);
   });
 
-  test('render list of events', () => {
-    expect(AppWrapper.find(EventList)).toHaveLength(1);
+  afterAll(() => {
+    AppWrapper.unmount();
   });
 
-  test('render search bar', () => {
-    expect(AppWrapper.find(CitySearch)).toHaveLength(1);
-  });
-
-  test('render number of events input', () => {
-    expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
+  test('render App correctly', () => {
+    const tree = renderer.create(<App />).toJSON;
+    expect(tree).toMatchSnapshot();
   });
 });
 

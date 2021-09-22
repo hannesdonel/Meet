@@ -12,6 +12,10 @@ describe('<CitySearch /> component', () => {
     CitySearchWrapper = shallow(<CitySearch locations={locations} updateEvents={() => {}} />);
   });
 
+  afterAll(() => {
+    CitySearchWrapper.unmount();
+  });
+
   test('render search input', () => {
     expect(CitySearchWrapper.find('.city-search__input')).toHaveLength(1);
   });

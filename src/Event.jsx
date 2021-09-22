@@ -12,7 +12,7 @@ class Event extends Component {
   toggleShow = () => {
     const { show } = this.state;
 
-    return ({ show: !show });
+    return (this.setState({ show: !show }));
   }
 
   render() {
