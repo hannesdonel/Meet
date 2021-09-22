@@ -3,6 +3,37 @@ import NProgress from 'nprogress';
 import mockData from './mock-data';
 import { AUTH_ENDPOINT, EVENTS_ENDPOINT, TOKEN_ENDPOINT } from './config.json';
 
+const removeQuery = () => {
+  let newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
+  if (window.history.pushState && window.location.pathname) {
+    window.history.pushState('', '', newurl);
+  } else {
+    newurl = `${window.location.protocol}//${window.location.host}`;
+    window.history.pushState('', '', newurl);
+  }
+};
+
+export const extractLocations = (events) => {
+  const extractedLocations = events.map((event) => event.location);
+  const locations = [...new Set(extractedLocations)];
+  return locations;
+};
+
+const getToken = async (code) => {
+  const encodeCode = encodeURIComponent(code);
+  /* eslint-disable-next-line */
+  const { access_token } = await fetch(
+    `${TOKEN_ENDPOINT}/${encodeCode}`,
+  )
+    .then((res) => res.json())
+    .catch((error) => error);
+
+  localStorage.setItem('access_token', access_token);
+
+  /* eslint-disable-next-line */
+  return access_token;
+};
+
 const checkToken = async (accessToken) => {
   const result = await fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`,
@@ -11,19 +42,6 @@ const checkToken = async (accessToken) => {
     .catch((error) => error.json());
 
   return result;
-};
-
-const getToken = async (code) => {
-  const encodeCode = encodeURIComponent(code);
-  const { accessToken } = await fetch(
-    `${TOKEN_ENDPOINT}/${encodeCode}`,
-  )
-    .then((res) => res.json())
-    .catch((error) => error);
-
-  localStorage.setItem('access_token', accessToken);
-
-  return accessToken;
 };
 
 export const getAccessToken = async () => {
@@ -40,26 +58,9 @@ export const getAccessToken = async () => {
       window.location.href = authUrl;
       return (window.location.href);
     }
-    return code && getToken(code);
+    return getToken(code);
   }
   return accessToken;
-};
-
-export const extractLocations = (events) => {
-  const extractedLocations = events.map((event) => event.location);
-  const locations = [...new Set(extractedLocations)];
-  return locations;
-};
-
-const removeQuery = () => {
-  let newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
-
-  if (window.history.pushState && window.location.pathname) {
-    window.history.pushState('', '', newurl);
-  } else {
-    newurl = `${window.location.protocol}//${window.location.host}`;
-    window.history.pushState('', '', newurl);
-  }
 };
 
 export const getEvents = async () => {
@@ -70,19 +71,15 @@ export const getEvents = async () => {
     return mockData;
   }
 
-  try {
-    const token = await getAccessToken();
-    removeQuery();
-    const url = `${EVENTS_ENDPOINT}/${token}`;
-    const result = await axios.get(url);
-    if (result.data) {
-      const locations = extractLocations(result.data.events);
-      localStorage.setItem('lastEvents', JSON.stringify(result.data));
-      localStorage.setItem('locations', JSON.stringify(locations));
-    }
-    NProgress.done();
-    return result.data.events;
-  } catch (error) {
-    return error;
+  const token = await getAccessToken();
+  removeQuery();
+  const url = `${EVENTS_ENDPOINT}/${token}`;
+  const result = await axios.get(url);
+  if (result.data) {
+    const locations = extractLocations(result.data.events);
+    localStorage.setItem('lastEvents', JSON.stringify(result.data));
+    localStorage.setItem('locations', JSON.stringify(locations));
   }
+  NProgress.done();
+  return result.data.events;
 };
