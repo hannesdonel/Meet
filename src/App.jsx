@@ -12,39 +12,68 @@ class App extends Component {
     super();
 
     this.state = {
+      allEvents: [],
       events: [],
       locations: [],
+      currentLocation: '',
+      count: 32,
+      isLoading: true,
     };
   }
 
   componentDidMount() {
-    this.mounted = true;
-    getEvents().then((events) => {
-      if (this.mounted) {
-        this.setState({ events, locations: extractLocations(events) });
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
-  updateEvents = (location) => {
-    getEvents().then((events) => {
-      const locationEvents = (location === '') ? events : events.filter((event) => event.location === location);
+    this.fetchData().then((data) => {
       this.setState({
-        events: locationEvents,
+        allEvents: data.events,
+        events: data.events,
+        locations: data.locations,
+        isLoading: false,
       });
     });
   }
 
+  fetchData = async () => {
+    const events = await getEvents();
+    const locations = extractLocations(events);
+    return { events, locations };
+  };
+
+  setEventCount = async (number) => {
+    const { currentLocation } = this.state;
+    await this.setState({ count: number });
+    this.updateEvents(currentLocation);
+  }
+
+  updateEvents = (location) => {
+    const { count, allEvents } = this.state;
+    const locationEvents = (location === '') ? allEvents : allEvents.filter((event) => event.location === location);
+    if (count === '0') {
+      this.setState({
+        currentLocation: location,
+        events: locationEvents,
+      });
+    } else if (count !== 0) {
+      const locationEventsShortened = locationEvents.slice(0, count);
+      this.setState({
+        currentLocation: location,
+        events: locationEventsShortened,
+      });
+    }
+  }
+
   render() {
-    const { events, locations } = this.state;
+    const { events, locations, isLoading } = this.state;
+
+    if (isLoading) {
+      return (
+        <div className="loader-container"><p>loading...</p></div>
+      );
+    }
+
     return (
       <div className="App">
         <CitySearch locations={locations} updateEvents={this.updateEvents} />
-        <NumberOfEvents />
+        <NumberOfEvents setEventCount={this.setEventCount} />
         <EventList events={events} />
       </div>
     );
