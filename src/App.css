@@ -83,6 +83,8 @@ input[type="number"] {
 }  
 
 .city-search__suggestions {
+  visibility: hidden;
+  opacity: 0;
   width: 100%;
   max-height: 60vh;
   position: absolute;
@@ -95,12 +97,14 @@ input[type="number"] {
   background-color: var(--light-grey-no-opacity);
   border-radius: var(--border-radius);
   border: 1px solid var(--border-color);
+  transition: visibility 0.15s, opacity 0.15s linear;
 }
 
 .city-search__suggestions > li {
   text-align: left;
   padding: 8px 6px 8px 10px;
   cursor: default;
+  transition-duration: 0.2s;
 }
 
 .city-search__suggestions > li:last-child {
@@ -120,6 +124,20 @@ input[type="number"] {
 }
 
 .city-search__button:hover {
+  cursor: pointer;
+}
+
+.city-search__all-button {
+  background: none;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+  padding-top: 8px;
+}
+
+.city-search__all-button:hover {
   cursor: pointer;
 }
 
@@ -150,7 +168,14 @@ input[type="number"] {
   border-radius: var(--border-radius);
   position: relative;
   box-shadow: var(--light-shadow);
+  background-color: rgba(221, 246, 255, 0.1);
+  transition-duration: 0.15s;
 }  
+
+.event:hover,
+.event:focus {
+  transform: scale(1.003);
+}
 
 .event__window {
   text-align: left;
@@ -164,8 +189,7 @@ input[type="number"] {
   cursor: unset;
 }
 
-.event__show-more-button,
-.event__show-less-button {
+.event__show-more-button {
   width: 100%;
   padding: 10px 0 0;
   text-align: center;
@@ -173,6 +197,11 @@ input[type="number"] {
   border: none;
   outline: none;
   cursor: pointer;
+  transition-duration: 0.01s;
+}
+
+.turn {
+  transform: rotate(-0.5turn);
 }
 
 .event__summary {

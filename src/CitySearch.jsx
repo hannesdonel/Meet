@@ -49,7 +49,7 @@ class CitySearch extends Component {
         />
         <ul
           className="city-search__suggestions"
-          style={showSuggestions ? {} : { display: 'none' }}
+          style={showSuggestions ? { visibility: 'visible', opacity: 1 } : { visibility: 'hidden', opacity: 0 }}
         >
           {suggestions.map((suggestion) => (
             <li

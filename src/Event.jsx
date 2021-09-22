@@ -6,18 +6,19 @@ class Event extends Component {
 
     this.state = {
       show: false,
+      turn: false,
     };
   }
 
   toggleShow = () => {
-    const { show } = this.state;
-
-    return (this.setState({ show: !show }));
+    const { show, turn } = this.state;
+    this.setState({ turn: !turn });
+    this.setState({ show: !show });
   }
 
   render() {
     const { event } = this.props;
-    const { show } = this.state;
+    const { show, turn } = this.state;
 
     return (
       <div className="event">
@@ -44,28 +45,15 @@ class Event extends Component {
             {show === true && (
             <p className="event__details">{event.description}</p>
             )}
-            {show === false && (
-              <span
-                className="material-icons event__show-more-button"
-                onClick={() => this.toggleShow()}
-                onKeyDown={() => this.toggleShow()}
-                role="button"
-                tabIndex={0}
-              >
-                keyboard_double_arrow_down
-              </span>
-            )}
-            {show === true && (
-              <span
-                className="material-icons event__show-more-button"
-                onClick={() => this.toggleShow()}
-                onKeyDown={() => this.toggleShow()}
-                role="button"
-                tabIndex={0}
-              >
-                keyboard_double_arrow_up
-              </span>
-            )}
+            <span
+              className={`material-icons event__show-more-button ${turn ? '' : 'turn'}`}
+              onClick={() => this.toggleShow()}
+              onKeyDown={() => this.toggleShow()}
+              role="button"
+              tabIndex={0}
+            >
+              keyboard_double_arrow_down
+            </span>
           </ul>
         </button>
       </div>
