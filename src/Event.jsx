@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 class Event extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       show: false,
@@ -12,7 +12,7 @@ class Event extends Component {
   toggleShow = () => {
     const { show } = this.state;
 
-    return (show === false) ? this.setState({ show: true }) : this.setState({ show: false });
+    return ({ show: !show });
   }
 
   render() {
@@ -25,7 +25,7 @@ class Event extends Component {
           <li className="event__summary">{event.summary}</li>
           <li className="event__location">{event.location}</li>
           <li className="event__date">
-            start:
+            Start:
             {event.start.dateTime}
             {' '}
             - Time Zone:
@@ -49,7 +49,7 @@ class Event extends Component {
             className="event__show-less-button"
             onClick={() => this.toggleShow()}
           >
-            hide details
+            Hide details
           </button>
           )}
         </ul>
