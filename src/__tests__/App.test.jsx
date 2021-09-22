@@ -7,6 +7,7 @@ import CitySearch from '../CitySearch';
 
 import mockData from '../mock-data';
 import { extractLocations, getEvents } from '../api';
+import NumberOfEvents from '../NumberOfEvents';
 
 describe('<App /> component', () => {
   let AppWrapper;
@@ -21,6 +22,12 @@ describe('<App /> component', () => {
   test('render App correctly', () => {
     const tree = renderer.create(<App />).toJSON;
     expect(tree).toMatchSnapshot();
+  });
+
+  test('setEventCount sets "count" state correctly', () => {
+    const number = 20;
+    AppWrapper.instance().setEventCount(number);
+    expect(AppWrapper.state('count')).toEqual(number);
   });
 });
 
@@ -62,6 +69,26 @@ describe('<App /> integration', () => {
     await suggestionItems.at(suggestionItems.length - 1).simulate('click');
     const allEvents = await getEvents();
     expect(AppWrapper.state('events')).toEqual(allEvents);
+    AppWrapper.unmount();
+  });
+
+  test('NumberOfEvents sets number of events to be displayed correctly', async () => {
+    const AppWrapper = mount(<App />);
+    const NumberOfEventesWrapper = AppWrapper.find(NumberOfEvents);
+    await NumberOfEventesWrapper.find('.number-of-events__input').simulate('change', { target: { value: 1 } });
+    const countState = AppWrapper.state('count');
+    const eventsState = AppWrapper.state('events');
+    expect(eventsState.length).toEqual(countState);
+    AppWrapper.unmount();
+  });
+
+  test('show all events when NumberOfEvents is set to "0"', async () => {
+    const AppWrapper = await mount(<App />);
+    const NumberOfEventesWrapper = AppWrapper.find(NumberOfEvents);
+    const eventsStateBefore = AppWrapper.state('events');
+    await NumberOfEventesWrapper.find('.number-of-events__input').simulate('change', { target: { value: '0' } });
+    const eventsStateAfter = AppWrapper.state('events');
+    expect(JSON.stringify(eventsStateAfter)).toMatch(JSON.stringify(eventsStateBefore));
     AppWrapper.unmount();
   });
 });

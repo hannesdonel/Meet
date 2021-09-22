@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 class CitySearch extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    const { locations } = this.props;
 
     this.state = {
       query: '',
-      suggestions: [],
+      suggestions: locations,
       showSuggestions: undefined,
     };
   }
@@ -42,6 +44,7 @@ class CitySearch extends Component {
           value={query}
           onChange={(e) => this.handleInputChange(e.target.value)}
           onFocus={() => this.setState({ showSuggestions: true })}
+          onBlur={() => setTimeout(() => { this.setState({ showSuggestions: false }); }, 10)}
         />
         <ul
           className="city-search__suggestions"
