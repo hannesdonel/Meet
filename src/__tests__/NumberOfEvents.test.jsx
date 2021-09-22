@@ -8,6 +8,10 @@ describe('<NumberOfEvents /> Component', () => {
     NumberOfEventsWrapper = shallow(<NumberOfEvents />);
   });
 
+  afterAll(() => {
+    NumberOfEventsWrapper.unmount();
+  });
+
   test('render number input', () => {
     expect(NumberOfEventsWrapper.find('.number-of-events__input')).toHaveLength(1);
   });
