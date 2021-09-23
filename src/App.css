@@ -6,8 +6,8 @@
   --font-size-bigger: 18px;
   --border-radius: 5px;
   --border-color: rgb(204, 204, 204);
-  --light-shadow: 0px 1px 5px rgba(0, 0, 0, 0.05);
-  --heavy-shadow: 0px 1px 15px rgba(0, 0, 0, 0.1);
+  --light-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+  --heavy-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
   --light-grey: rgba(238, 238, 238, 0.5);
   --light-grey-no-opacity: rgb(238, 238, 238);
 }
@@ -61,13 +61,14 @@ input[type="number"] {
 }
 
 .search-bar {
+  position: -webkit-sticky;
   position: sticky;
-  top: 0px;
+  top: 0;
   display: flex;
   flex-direction: row;
   padding: 20px 0 30px;
   background: white;
-  border-bottom:  1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   z-index: 1;
 }
 
@@ -80,7 +81,7 @@ input[type="number"] {
 
 .city-search__input {
   width: 100%;
-}  
+}
 
 .city-search__suggestions {
   visibility: hidden;
@@ -170,7 +171,7 @@ input[type="number"] {
   box-shadow: var(--light-shadow);
   background-color: rgba(221, 246, 255, 0.1);
   transition-duration: 0.15s;
-}  
+}
 
 .event:hover,
 .event:focus {
@@ -219,16 +220,16 @@ input[type="number"] {
 
 .group-name {
   text-transform: uppercase;
-}  
+}
 
 .going,
 .visibility {
   font-style: italic;
-}  
+}
 
 .event__description {
   overflow-x: hidden;
-}  
+}
 
 .button-wrapper {
   display: grid;
@@ -248,10 +249,12 @@ input[type="number"] {
   align-items: center;
   flex-direction: column;
 }
+
 .data-vis-wrapper .recharts-responsive-container {
   min-width: 100%;
   display: flex;
 }
+
 .recharts-surface {
   overflow: visible;
 }
@@ -260,7 +263,7 @@ input[type="number"] {
   color: #494949;
   text-transform: uppercase;
   text-decoration: none;
-  background: #ffffff;
+  background: #fff;
   padding: 20px;
   border: var(--border-radius) solid #494949;
   display: inline-block;
@@ -277,12 +280,15 @@ input[type="number"] {
   border-radius: 2px;
   box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
 }
+
 .google-btn:hover {
   box-shadow: 0 0 6px #4285f4;
 }
+
 .google-btn:active {
   background: #1669f2;
 }
+
 .google-icon-wrapper {
   position: absolute;
   margin-top: 1px;
@@ -292,6 +298,7 @@ input[type="number"] {
   border-radius: 2px;
   background-color: #fff;
 }
+
 .google-icon {
   position: absolute;
   margin-top: 11px;
@@ -299,6 +306,7 @@ input[type="number"] {
   width: 18px;
   height: 18px;
 }
+
 .btn-text {
   float: right;
   margin: 11px 11px 0 0;
@@ -307,12 +315,11 @@ input[type="number"] {
   font-family: "Roboto";
 }
 
-
-
 @media only screen and (min-width: 992px) {
   .data-vis-wrapper {
     flex-direction: row;
   }
+
   .data-vis-wrapper .recharts-responsive-container {
     flex-basis: 50%;
     max-width: 50%;

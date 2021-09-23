@@ -65,6 +65,8 @@
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "gh-pages": "^3.2.3",
+    "jest-cucumber": "^3.0.1",
+    "puppeteer": "^10.4.0",
     "react-test-renderer": "^17.0.2"
   }
 }
