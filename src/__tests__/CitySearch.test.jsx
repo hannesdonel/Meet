@@ -87,7 +87,7 @@ describe('<CitySearch /> component', () => {
   test('selecting CitySearch input reveals the suggestions list', () => {
     CitySearchWrapper.find('.city-search__input').simulate('focus');
     expect(CitySearchWrapper.state('showSuggestions')).toBe(true);
-    expect(CitySearchWrapper.find('.city-search__suggestions').prop('style')).not.toEqual({ display: 'none' });
+    expect(CitySearchWrapper.find('.city-search__suggestions').prop('style')).not.toEqual({ opacity: 0, visibility: 'hidden' });
     CitySearchWrapper.find('.city-search__input').simulate('blur');
     setTimeout(() => expect(CitySearchWrapper.state('showSuggestions')).toBe(false), 15);
     expect(Object.keys(CitySearchWrapper.find('.city-search__suggestions'))).toHaveLength(0);
@@ -100,6 +100,6 @@ describe('<CitySearch /> component', () => {
     });
     CitySearchWrapper.find('.city-search__suggestions button').at(0).simulate('click');
     expect(CitySearchWrapper.state('showSuggestions')).toBe(false);
-    expect(CitySearchWrapper.find('.city-search__suggestions').prop('style')).toEqual({ display: 'none' });
+    expect(CitySearchWrapper.find('.city-search__suggestions').prop('style')).toEqual({ opacity: 0, visibility: 'hidden' });
   });
 });

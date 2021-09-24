@@ -31,9 +31,21 @@ describe('<Event /> component', () => {
     const showMoreButton = EventWrapper.find('.event__show-more-button');
     showMoreButton.simulate('click');
     expect(EventWrapper.state('show')).toBe(true);
+    showMoreButton.simulate('click');
+    expect(EventWrapper.state('show')).toBe(false);
+    showMoreButton.simulate('keyDown');
+    expect(EventWrapper.state('show')).toBe(true);
+    showMoreButton.simulate('keyDown');
+    expect(EventWrapper.state('show')).toBe(false);
+  });
 
-    const showLessButton = EventWrapper.find('.event__show-less-button');
-    showLessButton.simulate('click');
+  test('change state on Event window click', () => {
+    EventWrapper.setState({ show: false });
+    const showMoreButton = EventWrapper.find('.event__window');
+    showMoreButton.simulate('click');
+    expect(EventWrapper.state('show')).toBe(true);
+
+    showMoreButton.simulate('click');
     expect(EventWrapper.state('show')).toBe(false);
   });
 });
