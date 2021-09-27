@@ -60,6 +60,7 @@ class App extends Component {
     const locationEvents = (location === '') ? allEvents : allEvents.filter((event) => event.location === location);
 
     if (count.toString() === '0') {
+      this.setValue();
       this.setState({
         currentLocation: location,
         events: locationEvents,
