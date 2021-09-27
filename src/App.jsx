@@ -39,9 +39,13 @@ class App extends Component {
   }
 
   fetchData = async () => {
-    const events = await getEvents();
-    const locations = extractLocations(events);
-    return { events, locations };
+    try {
+      const events = await getEvents();
+      const locations = extractLocations(events);
+      return { events, locations };
+    } catch (error) {
+      return error;
+    }
   };
 
   setEventCount = async (number) => {
@@ -52,7 +56,8 @@ class App extends Component {
 
   setValue = () => {
     const { count } = this.state;
-    document.getElementById('number-of-events__input').value = count;
+    const input = document.getElementById('number-of-events__input');
+    input.value = count;
   }
 
   updateEvents = (location) => {

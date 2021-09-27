@@ -23,6 +23,7 @@ defineFeature(feature, (test) => {
     then('the user will see a list of all upcoming events', () => {
       AppWrapper.update();
       expect(AppWrapper.find('.event')).toHaveLength(mockData.length);
+      AppWrapper.unmount();
     });
   });
 
@@ -38,6 +39,7 @@ defineFeature(feature, (test) => {
 
     then('the user will see a list of cities as suggestions that match what they’ve typed', () => {
       expect(CitySearchWrapper.find('.city-search__button')).toHaveLength(1);
+      CitySearchWrapper.unmount();
     });
   });
 
@@ -71,6 +73,7 @@ defineFeature(feature, (test) => {
       events.forEach((event) => {
         expect(event.text()).toEqual('Berlin, Germany');
       });
+      AppWrapper.unmount();
     });
   });
 });
