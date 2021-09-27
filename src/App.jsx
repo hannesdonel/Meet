@@ -18,6 +18,7 @@ class App extends Component {
       currentLocation: '',
       count: 32,
       isLoading: true,
+      showMore: false,
     };
   }
 
@@ -25,10 +26,15 @@ class App extends Component {
     this.fetchData().then((data) => {
       this.setState({
         allEvents: data.events,
-        events: data.events,
+        events: data.events.slice(0, 32),
         locations: data.locations,
         isLoading: false,
       });
+      if (data.events.length > 32) {
+        this.setState({
+          showMore: true,
+        });
+      }
     });
   }
 
@@ -44,25 +50,44 @@ class App extends Component {
     this.updateEvents(currentLocation);
   }
 
+  setValue = () => {
+    const { count } = this.state;
+    document.getElementById('number-of-events__input').value = count;
+  }
+
   updateEvents = (location) => {
     const { count, allEvents } = this.state;
     const locationEvents = (location === '') ? allEvents : allEvents.filter((event) => event.location === location);
-    if (count === '0') {
+
+    if (count.toString() === '0') {
       this.setState({
         currentLocation: location,
         events: locationEvents,
+        showMore: false,
       });
-    } else if (count !== 0) {
+    } else if (count.toString() !== '0') {
       const locationEventsShortened = locationEvents.slice(0, count);
-      this.setState({
-        currentLocation: location,
-        events: locationEventsShortened,
-      });
+      this.setValue();
+      if (locationEventsShortened.length === locationEvents.length) {
+        this.setState({
+          currentLocation: location,
+          events: locationEventsShortened,
+          showMore: false,
+        });
+      } else {
+        this.setState({
+          currentLocation: location,
+          events: locationEventsShortened,
+          showMore: true,
+        });
+      }
     }
   }
 
   render() {
-    const { events, locations, isLoading } = this.state;
+    const {
+      events, locations, isLoading, showMore, count,
+    } = this.state;
 
     if (isLoading) {
       return (
@@ -76,7 +101,12 @@ class App extends Component {
           <CitySearch locations={locations} updateEvents={this.updateEvents} />
           <NumberOfEvents setEventCount={this.setEventCount} />
         </div>
-        <EventList events={events} />
+        <EventList
+          events={events}
+          showMore={showMore}
+          setEventCount={this.setEventCount}
+          count={count}
+        />
       </div>
     );
   }

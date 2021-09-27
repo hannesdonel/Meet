@@ -1,7 +1,7 @@
 import axios from 'axios';
 import NProgress from 'nprogress';
 import mockData from './mock-data';
-import { AUTH_ENDPOINT, EVENTS_ENDPOINT, TOKEN_ENDPOINT } from './config.json';
+import { AUTH_ENDPOINT, EVENTS_ENDPOINT, TOKEN_ENDPOINT } from './config';
 
 const removeQuery = () => {
   let newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;

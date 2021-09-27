@@ -158,13 +158,35 @@ input[type="number"] {
 }
 
 .event-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0;
+}
+
+.event-list__item {
+  width: 100%;
+}
+
+.event-list__item:first-of-type {
+  margin-top: 2vh;
+}
+
+.show-more-events {
+  margin-top: 2vh;
+  max-width: 100px;
+  transition: margin-top 0.15s;
+}
+
+.show-more-events:hover {
+  cursor: pointer;
+  margin-top: 3vh;
 }
 
 .event {
   padding: 10px;
   min-width: 250px;
-  margin: 3vh 0;
+  margin: 2vh 0;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   position: relative;
