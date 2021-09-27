@@ -74,6 +74,7 @@ input[type="number"] {
 
 .city-search {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   position: relative;
   margin-right: 10px;
@@ -117,11 +118,17 @@ input[type="number"] {
   background-color: #bcdcdb;
 }
 
+.city-search__suggestions > li:first-child:hover {
+  background-color: unset;
+}
+
 .city-search__button {
   background: none;
   border: none;
   width: 100%;
   text-align: left;
+  padding: 0;
+  margin: 5px 0;
 }
 
 .city-search__button:hover {
@@ -142,12 +149,20 @@ input[type="number"] {
   cursor: pointer;
 }
 
+.city-search__error {
+  display: block;
+  position: absolute;
+  top: 38px;
+  padding-left: 10px;
+}
+
 .number-of-events {
   display: flex;
   justify-content: flex-end;
+  align-content: flex-start;
   font-size: var(--font-size-smaller);
   width: 50px;
-  margin: auto;
+  height: 38px;
 }
 
 .number-of-events__input {
@@ -155,6 +170,7 @@ input[type="number"] {
   border: none;
   background: none;
   cursor: pointer;
+  padding: 0;
 }
 
 .event-list {
@@ -170,6 +186,10 @@ input[type="number"] {
 
 .event-list__item:first-of-type {
   margin-top: 2vh;
+}
+
+.event-list__warning {
+  width: 100%;
 }
 
 .show-more-events {
@@ -197,7 +217,7 @@ input[type="number"] {
 
 .event:hover,
 .event:focus {
-  transform: scale(1.003);
+  transform: scale(1.005);
 }
 
 .event__window {
@@ -259,11 +279,6 @@ input[type="number"] {
   grid-gap: 20px;
   padding: 20px;
   font-family: sans-serif;
-}
-
-.Alert {
-  position: fixed;
-  top: 20px;
 }
 
 .data-vis-wrapper {

@@ -19,6 +19,8 @@ class App extends Component {
       count: 32,
       isLoading: true,
       showMore: false,
+      warningText: '',
+      showWarningAlert: false,
     };
   }
 
@@ -70,6 +72,7 @@ class App extends Component {
         currentLocation: location,
         events: locationEvents,
         showMore: false,
+        showWarningAlert: false,
       });
     } else if (count.toString() !== '0') {
       const locationEventsShortened = locationEvents.slice(0, count);
@@ -79,12 +82,20 @@ class App extends Component {
           currentLocation: location,
           events: locationEventsShortened,
           showMore: false,
+          showWarningAlert: false,
         });
       } else {
         this.setState({
           currentLocation: location,
           events: locationEventsShortened,
           showMore: true,
+          showWarningAlert: false,
+        });
+      }
+      if (locationEvents.length < parseInt(count, 10)) {
+        this.setState({
+          warningText: 'Your request did not produce any more results.',
+          showWarningAlert: true,
         });
       }
     }
@@ -92,7 +103,7 @@ class App extends Component {
 
   render() {
     const {
-      events, locations, isLoading, showMore, count,
+      events, locations, isLoading, showMore, count, showWarningAlert, warningText,
     } = this.state;
 
     if (isLoading) {
@@ -112,6 +123,8 @@ class App extends Component {
           showMore={showMore}
           setEventCount={this.setEventCount}
           count={count}
+          showWarningAlert={showWarningAlert}
+          warningText={warningText}
         />
       </div>
     );

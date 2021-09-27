@@ -1,8 +1,9 @@
 import React from 'react';
 import Event from './Event';
+import { WarningAlert } from './Alert';
 
 const EventList = ({
-  events, showMore, setEventCount, count,
+  events, showMore, setEventCount, count, showWarningAlert, warningText,
 }) => {
   let newCount;
   const handleShowMore = () => {
@@ -50,6 +51,15 @@ const EventList = ({
           <Event event={event} />
         </li>
       ))}
+
+      <div
+        className={showWarningAlert ? 'event-list__warning' : 'event-list__warning display-none'}
+      >
+        <WarningAlert
+          text={warningText}
+        />
+      </div>
+
       {showMore === true && (
         <div
           className="show-more-events"

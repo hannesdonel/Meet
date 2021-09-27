@@ -52,7 +52,7 @@ class Event extends Component {
               role="button"
               tabIndex={0}
             >
-              keyboard_double_arrow_down
+              keyboard_double_arrow_up
             </span>
           </ul>
         </button>

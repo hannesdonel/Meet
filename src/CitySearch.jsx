@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { InfoAlert, ErrorAlert } from './Alert';
 
 class CitySearch extends Component {
   constructor(props) {
@@ -10,6 +11,10 @@ class CitySearch extends Component {
       query: '',
       suggestions: locations,
       showSuggestions: undefined,
+      infoText: '',
+      showInfoAlert: false,
+      errorText: '',
+      showErrorAlert: false,
     };
   }
 
@@ -17,11 +22,39 @@ class CitySearch extends Component {
     const { locations } = this.props;
     const suggestionsToSet = locations
       .filter((location) => location.toUpperCase().includes(value.toUpperCase()));
-    this.setState({
-      query: value,
-      suggestions: suggestionsToSet,
-      showSuggestions: true,
-    });
+
+    if (suggestionsToSet.length === 0) {
+      this.setState({
+        query: value,
+        suggestions: suggestionsToSet,
+        showSuggestions: true,
+        showInfoAlert: true,
+        infoText: 'No such city found.',
+        showErrorAlert: false,
+        errorText: '',
+      });
+    }
+    if (value.match(/[a-zA-ZÀ-ÿ\s-,]*/)[0] !== value) {
+      this.setState({
+        query: value,
+        showSuggestions: false,
+        showInfoAlert: false,
+        infoText: '',
+        showErrorAlert: true,
+        errorText: 'Please use letters only.',
+      });
+    }
+    if (suggestionsToSet.length !== 0 && value.match(/[a-zA-ZÀ-ÿ\s-,]*/)[0] === value) {
+      this.setState({
+        query: value,
+        suggestions: suggestionsToSet,
+        showSuggestions: true,
+        showInfoAlert: false,
+        infoText: '',
+        showErrorAlert: false,
+        errorText: '',
+      });
+    }
   }
 
   handleSuggestionClick = (suggestion) => {
@@ -30,14 +63,20 @@ class CitySearch extends Component {
     this.setState({
       query: suggestion,
       showSuggestions: false,
+      showInfoAlert: false,
+      infoText: '',
+      showErrorAlert: false,
+      errorText: '',
     });
   }
 
   render() {
-    const { query, suggestions, showSuggestions } = this.state;
+    const {
+      query, suggestions, showSuggestions, infoText, showInfoAlert, showErrorAlert, errorText,
+    } = this.state;
 
     return (
-      <div className="city-search">
+      <div id="city-search" className="city-search">
         <input
           type="text"
           className="city-search__input"
@@ -47,10 +86,16 @@ class CitySearch extends Component {
           onFocus={() => this.setState({ showSuggestions: true })}
           onBlur={() => setTimeout(() => { this.setState({ showSuggestions: false }); }, 10)}
         />
+        <div className={showErrorAlert ? 'city-search__error' : 'city-search__error display-none'}>
+          <ErrorAlert text={errorText} />
+        </div>
         <ul
           className="city-search__suggestions"
           style={showSuggestions ? { visibility: 'visible', opacity: 1 } : { visibility: 'hidden', opacity: 0 }}
         >
+          <li className={showInfoAlert ? 'city-search__info' : 'city-search__info display-none'}>
+            <InfoAlert text={infoText} />
+          </li>
           {suggestions.map((suggestion) => (
             <li
               key={suggestion}

@@ -27,6 +27,7 @@ module.exports = {
     }],
     'react/require-default-props': 'off',
     'react/prop-types': 'off',
+    'max-classes-per-file': 'off',
   },
   overrides: [
     {
