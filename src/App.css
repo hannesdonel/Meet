@@ -165,13 +165,9 @@ input[type="number"] {
   background-color: #fff;
   padding: 5px 10px;
   font-size: 1.25em;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
-  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
-
-  /* display: block;
-  position: absolute;
-  top: 38px;
-  padding-left: 10px; */
+  box-shadow: var(--heavy-shadow);
 }
 
 .city-search__error::before {
