@@ -196,12 +196,25 @@ input[type="number"] {
 .show-more-events {
   margin-top: 2vh;
   max-width: 100px;
-  transition: margin-top 0.15s;
 }
 
 .show-more-events:hover {
   cursor: pointer;
-  margin-top: 3vh;
+}
+
+.show-more-events > p {
+  transition: 0.3s;
+}
+
+.show-more-events:hover > p {
+  transform: scale(1.1);
+}
+
+.show-more-events:hover > span {
+  -webkit-animation: bounce;
+  animation: bounce 0.5s infinite alternate;
+
+  /* margin-top: 3vh; */
 }
 
 .event {
@@ -213,7 +226,7 @@ input[type="number"] {
   position: relative;
   box-shadow: var(--light-shadow);
   background-color: rgba(221, 246, 255, 0.1);
-  transition-duration: 0.15s;
+  transition-duration: 0.3s;
 }
 
 .event:hover,
@@ -363,5 +376,25 @@ input[type="number"] {
     max-width: 50%;
     min-width: auto;
     margin: 0 auto;
+  }
+}
+
+@-webkit-keyframes bounce {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 60%, 0);
+  }
+}
+
+@keyframes bounce {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 60%, 0);
   }
 }
