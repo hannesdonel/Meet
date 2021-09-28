@@ -202,7 +202,7 @@ input[type="number"] {
 }
 
 #content {
-  margin-top: 79px;
+  margin-top: 69px;
 }
 
 .event-list {
@@ -216,8 +216,8 @@ input[type="number"] {
   width: 100%;
 }
 
-.event-list__item:first-of-type {
-  margin-top: 2vh;
+.event-list__item:first-of-type > div {
+  margin: max(20px, 2vh) 0 2vh;
 }
 
 .event-list__warning {
