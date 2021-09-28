@@ -60,16 +60,23 @@ input[type="number"] {
   height: 38px;
 }
 
-.search-bar {
-  position: -webkit-sticky;
-  position: sticky;
+#search-bar-container {
+  position: -webkit-fixed;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 0 5%;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+#search-bar {
   display: flex;
   flex-direction: row;
-  padding: 20px 0 30px;
-  background: white;
+  padding: 20px 0;
   border-bottom: 1px solid var(--border-color);
-  z-index: 1;
 }
 
 .city-search {
@@ -150,10 +157,35 @@ input[type="number"] {
 }
 
 .city-search__error {
-  display: block;
+  position: absolute;
+  top: 50px;
+  max-width: 30em;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  background-color: #fff;
+  padding: 5px 10px;
+  font-size: 1.25em;
+  border-radius: 5px;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
+
+  /* display: block;
   position: absolute;
   top: 38px;
-  padding-left: 10px;
+  padding-left: 10px; */
+}
+
+.city-search__error::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: 100%;
+  left: 1.5em;
+  border: 0.75rem solid transparent;
+  border-top: none;
+  border-bottom-color: #fff;
+  -webkit-filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, 0.1));
 }
 
 .number-of-events {
@@ -171,6 +203,10 @@ input[type="number"] {
   background: none;
   cursor: pointer;
   padding: 0;
+}
+
+#content {
+  margin-top: 79px;
 }
 
 .event-list {
