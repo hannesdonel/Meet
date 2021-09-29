@@ -6,7 +6,7 @@ import NumberOfEvents from './NumberOfEvents';
 import WelcomeScreen from './WelcomeScreen';
 
 import {
-  extractLocations, getEvents, checkToken, getAccessToken,
+  extractLocations, getEvents, checkToken,
 } from './api';
 import './nprogress.css';
 
@@ -24,20 +24,17 @@ class App extends Component {
       showMore: false,
       warningText: '',
       showWarningAlert: false,
-      showWelcomeScreen: true,
+      showWelcomeScreen: undefined,
     };
   }
 
   async componentDidMount() {
     const accessToken = localStorage.getItem('access_token');
-    console.log(!!(await checkToken(accessToken).error));
-    const isTokenValid = !!(await checkToken(accessToken).error);
+    const { error } = await checkToken(accessToken);
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
-    console.log('code', code);
-    console.log(!(code || isTokenValid));
-    this.setState({ showWelcomeScreen: !(code || isTokenValid), isLoading: false });
-    if (code || isTokenValid) {
+    this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: true });
+    if (code || error !== 'invalid_token') {
       this.fetchData().then((data) => {
         this.setState({
           allEvents: data.events,
@@ -115,10 +112,16 @@ class App extends Component {
     }
   }
 
+  toggleLoadingScreen = (boolean) => {
+    this.setState({
+      isLoading: boolean,
+    });
+  }
+
   render() {
     const {
       events, locations, isLoading, showMore,
-      count, showWarningAlert, warningText, showWelcomeScreen,
+      count, showWarningAlert, warningText, showWelcomeScreen, updateEvents,
     } = this.state;
 
     if (isLoading) {
@@ -127,28 +130,35 @@ class App extends Component {
       );
     }
 
-    return (
-      <div className="App">
-        <div id="search-bar-container">
-          <div id="search-bar">
-            <CitySearch locations={locations} updateEvents={this.updateEvents} />
-            <NumberOfEvents setEventCount={this.setEventCount} />
-          </div>
-        </div>
-        <div id="content">
-          <EventList
-            events={events}
-            showMore={showMore}
-            setEventCount={this.setEventCount}
-            count={count}
-            showWarningAlert={showWarningAlert}
-            warningText={warningText}
-          />
-        </div>
+    if (showWelcomeScreen) {
+      return (
         <WelcomeScreen
           showWelcomeScreen={showWelcomeScreen}
-          getAccessToken={() => { getAccessToken(); }}
+          isLoading={this.toggleLoadingScreen}
         />
+      );
+    }
+
+    return (
+      <div className="App">
+        <div>
+          <div id="search-bar-container">
+            <div id="search-bar">
+              <CitySearch locations={locations} updateEvents={updateEvents} />
+              <NumberOfEvents setEventCount={this.setEventCount} />
+            </div>
+          </div>
+          <div id="content">
+            <EventList
+              events={events}
+              showMore={showMore}
+              setEventCount={this.setEventCount}
+              count={count}
+              showWarningAlert={showWarningAlert}
+              warningText={warningText}
+            />
+          </div>
+        </div>
       </div>
     );
   }

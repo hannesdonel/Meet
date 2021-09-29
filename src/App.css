@@ -23,6 +23,8 @@
   flex-direction: column;
   text-align: center;
   padding: 10px 5% 2%;
+  min-height: 320px;
+  min-width: 220px;
 }
 
 ul {
@@ -43,6 +45,11 @@ p {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+}
+
+.loader-container > p {
+  -webkit-animation: pulse 0.5s infinite alternate;
+  animation: pulse 0.5s infinite alternate;
 }
 
 .showSuggestions {
@@ -257,7 +264,7 @@ input[type="number"] {
   border-radius: var(--border-radius);
   position: relative;
   box-shadow: var(--light-shadow);
-  background-color: rgba(221, 246, 255, 0.1);
+  background-color: rgba(3, 112, 139, 0.075);
   transition-duration: 0.3s;
 }
 
@@ -301,7 +308,7 @@ input[type="number"] {
 .event__details {
   text-align: justify;
   font-weight: 300;
-  background-color: var(--light-grey);
+  background-color: white;
   border-radius: var(--border-radius);
   padding: 5px 10px;
 }
@@ -343,14 +350,19 @@ input[type="number"] {
 }
 
 .welcome-screen {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
   background: white;
+  min-height: 320px;
+  min-width: 220px;
 }
 
-.login-button {
+/* .login-button {
   color: #494949;
   text-transform: uppercase;
   text-decoration: none;
@@ -361,19 +373,24 @@ input[type="number"] {
   transition: all 0.4s ease 0s;
   min-width: 10rem;
   margin: 1rem;
-}
+} */
 
 .google-btn {
-  width: 184px;
-  height: 42px;
-  margin: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 16px 0 0;
   background-color: #4285f4;
-  border-radius: 2px;
+  border: solid 2px var(--border-color);
+  border-radius: 5px;
   box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  transition: 0.25s;
 }
 
 .google-btn:hover {
-  box-shadow: 0 0 6px #4285f4;
+  box-shadow: 1px 4px 5px 1px #4285f4;
+  transform: scale(1.02);
+  cursor: pointer;
 }
 
 .google-btn:active {
@@ -381,32 +398,38 @@ input[type="number"] {
 }
 
 .google-icon-wrapper {
-  position: absolute;
-  margin-top: 1px;
-  margin-left: 1px;
-  width: 40px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
   height: 40px;
-  border-radius: 2px;
-  background-color: #fff;
+  width: 40px;
 }
 
 .google-icon {
-  position: absolute;
-  margin-top: 11px;
-  margin-left: -8px;
-  width: 18px;
-  height: 18px;
+  transition: 0.25s;
+}
+
+.google-btn:hover img {
+  transform: scale(0.9);
 }
 
 .btn-text {
-  float: right;
-  color: #fff;
-  letter-spacing: 0.2px;
-  font-family: "Roboto";
-  background-color: #4285f4;
-  width: 80%;
-  height: 100%;
-  text-align: center;
+  margin: 0 8px;
+  color: white;
+}
+
+.privacy-policy {
+  position: absolute;
+  bottom: 10px;
+}
+
+@media all and (max-height: 400px) {
+  .privacy-policy {
+    margin-top: 20px;
+    position: unset;
+  }
 }
 
 @media only screen and (min-width: 992px) {
@@ -439,5 +462,25 @@ input[type="number"] {
 
   to {
     transform: translate3d(0, 60%, 0);
+  }
+}
+
+@-webkit-keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.1);
   }
 }

@@ -1,18 +1,24 @@
 import React from 'react';
 import './App.css';
 
+import { getAccessToken } from './api';
+
 function WelcomeScreen(props) {
-  const { showWelcomeScreen, getAccessToken } = props;
-  console.log('showWelcomeScreen', showWelcomeScreen);
+  const { showWelcomeScreen, isLoading } = props;
   return showWelcomeScreen
     ? (
       <div className="welcome-screen">
-        <h1>Welcome to the Meet app</h1>
-        <h4>
+        <h3>Welcome to the Meet app</h3>
+        <h3>
           Log in to see upcoming events around the world for full-stack developers.
-        </h4>
+        </h3>
         <div className="button_cont" align="center">
-          <div className="google-btn">
+          <button
+            type="button"
+            onClick={() => { getAccessToken(); isLoading(true); }}
+            rel="nofollow noopener"
+            className="google-btn"
+          >
             <div className="google-icon-wrapper">
               <img
                 className="google-icon"
@@ -20,18 +26,13 @@ function WelcomeScreen(props) {
                 alt="Google sign-in"
               />
             </div>
-            <button
-              type="button"
-              onClick={() => { getAccessToken(); }}
-              rel="nofollow noopener"
-              className="btn-text"
-            >
+            <div className="btn-text">
               <b>Sign in with google</b>
-            </button>
-            Page 1
-          </div>
+            </div>
+          </button>
         </div>
         <a
+          className="privacy-policy"
           href="https://hannesdonel.github.io/Meet/privacy.html"
           rel="nofollow noopener"
         >
