@@ -1,8 +1,8 @@
 {
-  "name": "go-out-with-me",
+  "name": "meet",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://hannesdonel.github.io/go-out-with-me",
+  "homepage": "https://hannesdonel.github.io/Meet",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
