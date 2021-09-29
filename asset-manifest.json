@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/go-out-with-me/static/css/main.9ccd9e32.chunk.css",
-    "main.js": "/go-out-with-me/static/js/main.ab9b279f.chunk.js",
-    "main.js.map": "/go-out-with-me/static/js/main.ab9b279f.chunk.js.map",
-    "runtime-main.js": "/go-out-with-me/static/js/runtime-main.d71563b9.js",
-    "runtime-main.js.map": "/go-out-with-me/static/js/runtime-main.d71563b9.js.map",
-    "static/js/2.c9284e70.chunk.js": "/go-out-with-me/static/js/2.c9284e70.chunk.js",
-    "static/js/2.c9284e70.chunk.js.map": "/go-out-with-me/static/js/2.c9284e70.chunk.js.map",
-    "static/js/3.a849ec9d.chunk.js": "/go-out-with-me/static/js/3.a849ec9d.chunk.js",
-    "static/js/3.a849ec9d.chunk.js.map": "/go-out-with-me/static/js/3.a849ec9d.chunk.js.map",
-    "index.html": "/go-out-with-me/index.html",
-    "service-worker.js": "/go-out-with-me/service-worker.js",
-    "service-worker.js.map": "/go-out-with-me/service-worker.js.map",
-    "static/css/main.9ccd9e32.chunk.css.map": "/go-out-with-me/static/css/main.9ccd9e32.chunk.css.map",
-    "static/js/2.c9284e70.chunk.js.LICENSE.txt": "/go-out-with-me/static/js/2.c9284e70.chunk.js.LICENSE.txt"
+    "main.css": "/Meet/static/css/main.9ccd9e32.chunk.css",
+    "main.js": "/Meet/static/js/main.1b4f9628.chunk.js",
+    "main.js.map": "/Meet/static/js/main.1b4f9628.chunk.js.map",
+    "runtime-main.js": "/Meet/static/js/runtime-main.699e4302.js",
+    "runtime-main.js.map": "/Meet/static/js/runtime-main.699e4302.js.map",
+    "static/js/2.83f518c6.chunk.js": "/Meet/static/js/2.83f518c6.chunk.js",
+    "static/js/2.83f518c6.chunk.js.map": "/Meet/static/js/2.83f518c6.chunk.js.map",
+    "static/js/3.3c2d7248.chunk.js": "/Meet/static/js/3.3c2d7248.chunk.js",
+    "static/js/3.3c2d7248.chunk.js.map": "/Meet/static/js/3.3c2d7248.chunk.js.map",
+    "index.html": "/Meet/index.html",
+    "service-worker.js": "/Meet/service-worker.js",
+    "service-worker.js.map": "/Meet/service-worker.js.map",
+    "static/css/main.9ccd9e32.chunk.css.map": "/Meet/static/css/main.9ccd9e32.chunk.css.map",
+    "static/js/2.83f518c6.chunk.js.LICENSE.txt": "/Meet/static/js/2.83f518c6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.d71563b9.js",
-    "static/js/2.c9284e70.chunk.js",
+    "static/js/runtime-main.699e4302.js",
+    "static/js/2.83f518c6.chunk.js",
     "static/css/main.9ccd9e32.chunk.css",
-    "static/js/main.ab9b279f.chunk.js"
+    "static/js/main.1b4f9628.chunk.js"
   ]
 }

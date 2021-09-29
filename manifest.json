@@ -1,9 +1,9 @@
 {
-  "short_name": "With me",
-  "name": "Go out with me",
+  "short_name": "Meet",
+  "name": "Meet",
   "icons": [
     {
-      "src": "favicon.png",
+      "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon",
       "purpose": "any maskable"
