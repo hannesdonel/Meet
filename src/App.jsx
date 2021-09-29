@@ -3,8 +3,11 @@ import './App.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
+import WelcomeScreen from './WelcomeScreen';
 
-import { extractLocations, getEvents } from './api';
+import {
+  extractLocations, getEvents, checkToken, getAccessToken,
+} from './api';
 import './nprogress.css';
 
 class App extends Component {
@@ -21,23 +24,34 @@ class App extends Component {
       showMore: false,
       warningText: '',
       showWarningAlert: false,
+      showWelcomeScreen: true,
     };
   }
 
-  componentDidMount() {
-    this.fetchData().then((data) => {
-      this.setState({
-        allEvents: data.events,
-        events: data.events.slice(0, 32),
-        locations: data.locations,
-        isLoading: false,
-      });
-      if (data.events.length > 32) {
+  async componentDidMount() {
+    const accessToken = localStorage.getItem('access_token');
+    console.log(!!(await checkToken(accessToken).error));
+    const isTokenValid = !!(await checkToken(accessToken).error);
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get('code');
+    console.log('code', code);
+    console.log(!(code || isTokenValid));
+    this.setState({ showWelcomeScreen: !(code || isTokenValid), isLoading: false });
+    if (code || isTokenValid) {
+      this.fetchData().then((data) => {
         this.setState({
-          showMore: true,
+          allEvents: data.events,
+          events: data.events.slice(0, 32),
+          locations: data.locations,
+          isLoading: false,
         });
-      }
-    });
+        if (data.events.length > 32) {
+          this.setState({
+            showMore: true,
+          });
+        }
+      });
+    }
   }
 
   fetchData = async () => {
@@ -103,7 +117,8 @@ class App extends Component {
 
   render() {
     const {
-      events, locations, isLoading, showMore, count, showWarningAlert, warningText,
+      events, locations, isLoading, showMore,
+      count, showWarningAlert, warningText, showWelcomeScreen,
     } = this.state;
 
     if (isLoading) {
@@ -130,6 +145,10 @@ class App extends Component {
             warningText={warningText}
           />
         </div>
+        <WelcomeScreen
+          showWelcomeScreen={showWelcomeScreen}
+          getAccessToken={() => { getAccessToken(); }}
+        />
       </div>
     );
   }

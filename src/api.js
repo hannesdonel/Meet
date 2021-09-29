@@ -13,7 +13,7 @@ const removeQuery = () => {
   }
 };
 
-export const extractLocations = (events) => {
+const extractLocations = (events) => {
   const extractedLocations = events.map((event) => event.location);
   const locations = [...new Set(extractedLocations)];
   return locations;
@@ -44,7 +44,7 @@ const checkToken = async (accessToken) => {
   return result;
 };
 
-export const getAccessToken = async () => {
+const getAccessToken = async () => {
   const accessToken = localStorage.getItem('access_token');
   const tokenCheck = accessToken && (await checkToken(accessToken));
 
@@ -63,7 +63,7 @@ export const getAccessToken = async () => {
   return accessToken;
 };
 
-export const getEvents = async () => {
+const getEvents = async () => {
   NProgress.start();
 
   if (window.location.href.startsWith('http://localhost')) {
@@ -88,4 +88,8 @@ export const getEvents = async () => {
   }
   NProgress.done();
   return result.data.events;
+};
+
+export {
+  getEvents, getAccessToken, checkToken, extractLocations,
 };
