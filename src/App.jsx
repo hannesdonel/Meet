@@ -33,7 +33,7 @@ class App extends Component {
     const { error } = await checkToken(accessToken);
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
-    this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: true });
+    this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: false });
     if (code || error !== 'invalid_token') {
       this.fetchData().then((data) => {
         this.setState({
