@@ -46,7 +46,7 @@ class ErrorAlert extends Alert {
   }
 
   getStyle = () => ({
-    color: this.color,
+    color: this.props.color || this.color,
     fontSize: '12px',
   })
 }

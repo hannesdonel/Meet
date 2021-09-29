@@ -9,6 +9,7 @@ import {
   extractLocations, getEvents, checkToken,
 } from './api';
 import './nprogress.css';
+import { ErrorAlert } from './Alert';
 
 class App extends Component {
   constructor() {
@@ -33,7 +34,7 @@ class App extends Component {
     const { error } = await checkToken(accessToken);
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
-    this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: false });
+    this.setState({ showWelcomeScreen: false, isLoading: false });
     if (code || error !== 'invalid_token') {
       this.fetchData().then((data) => {
         this.setState({
@@ -120,8 +121,8 @@ class App extends Component {
 
   render() {
     const {
-      events, locations, isLoading, showMore,
-      count, showWarningAlert, warningText, showWelcomeScreen, updateEvents,
+      events, locations, showMore, count, updateEvents,
+      isLoading, showWarningAlert, warningText, showWelcomeScreen,
     } = this.state;
 
     if (isLoading) {
@@ -149,6 +150,11 @@ class App extends Component {
             </div>
           </div>
           <div id="content">
+            <div
+              className={!navigator.onLine ? 'offline-alert' : 'offline-alert display-none'}
+            >
+              <ErrorAlert text="It seems you're offline." color="#ffffff" />
+            </div>
             <EventList
               events={events}
               showMore={showMore}
