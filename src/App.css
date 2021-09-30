@@ -221,6 +221,11 @@ input[type="number"] {
   z-index: 1;
 }
 
+.recharts-responsive-container {
+  position: unset;
+  margin-top: max(99px, 2vh);
+}
+
 .event-list {
   display: flex;
   flex-direction: column;

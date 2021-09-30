@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import {
+  ScatterChart, CartesianGrid, XAxis, YAxis, Tooltip, Scatter, ResponsiveContainer,
+} from 'recharts';
 import './App.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
@@ -34,8 +37,8 @@ class App extends Component {
     const { error } = await checkToken(accessToken);
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
-    this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: false });
-    if (code || error !== 'invalid_token') {
+    // this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: false });
+    if (code || error === 'invalid_token') {
       this.setState({ isLoading: true });
       this.fetchData().then((data) => {
         this.setState({
@@ -114,6 +117,16 @@ class App extends Component {
     }
   }
 
+  getData = () => {
+    const { locations, events } = this.state;
+    const data = locations.map((location) => {
+      const number = events.filter((event) => event.location === location).length;
+      const city = location.split(', ').shift();
+      return { city, number };
+    });
+    return data;
+  };
+
   toggleLoadingScreen = (boolean) => {
     this.setState({
       isLoading: boolean,
@@ -163,6 +176,15 @@ class App extends Component {
             >
               <ErrorAlert text="It seems you're offline." color="#ffffff" />
             </div>
+            <ResponsiveContainer height={400}>
+              <ScatterChart>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="city" name="City" type="category" />
+                <YAxis width={15} dataKey="number" name="Number of events" type="number" allowDecimals={false} />
+                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                <Scatter data={this.getData()} fill="#8884d8" />
+              </ScatterChart>
+            </ResponsiveContainer>
             <EventList
               events={events}
               showMore={showMore}
