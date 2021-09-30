@@ -135,7 +135,7 @@ class App extends Component {
 
   render() {
     const {
-      events, locations, showMore, count, updateEvents,
+      events, locations, showMore, count,
       isLoading, showWarningAlert, warningText, showWelcomeScreen,
     } = this.state;
 
@@ -166,7 +166,7 @@ class App extends Component {
         <div>
           <div id="search-bar-container">
             <div id="search-bar">
-              <CitySearch locations={locations} updateEvents={updateEvents} />
+              <CitySearch locations={locations} updateEvents={this.updateEvents} />
               <NumberOfEvents setEventCount={this.setEventCount} />
             </div>
           </div>
