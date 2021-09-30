@@ -36,6 +36,7 @@ class App extends Component {
     const code = searchParams.get('code');
     this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: false });
     if (code || error !== 'invalid_token') {
+      this.setState({ isLoading: true });
       this.fetchData().then((data) => {
         this.setState({
           allEvents: data.events,
@@ -127,7 +128,14 @@ class App extends Component {
 
     if (isLoading) {
       return (
-        <div className="loader-container"><p>loading...</p></div>
+        <div className="loader-container">
+          <p>loading...</p>
+          <div
+            className={!navigator.onLine ? 'offline-alert' : 'offline-alert display-none'}
+          >
+            <ErrorAlert text="It seems you're offline." color="#ffffff" />
+          </div>
+        </div>
       );
     }
 

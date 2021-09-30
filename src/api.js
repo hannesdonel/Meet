@@ -35,16 +35,11 @@ const getToken = async (code) => {
 };
 
 const checkToken = async (accessToken) => {
-  if (window.location.href.startsWith('http://localhost')) {
-    NProgress.done();
-    return true;
-  }
-
   const result = await fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`,
   )
     .then((res) => res.json())
-    .catch((error) => error.json());
+    .catch((error) => error);
 
   return result;
 };
