@@ -20,7 +20,10 @@ class CitySearch extends Component {
 
   componentDidUpdate(prevProps) {
     const { currentLocation } = this.props;
-    if (prevProps.currentLocation !== currentLocation) {
+    // if (currentLocation === undefined) {
+    //   this.handlePropChange('multiple cities');
+    // }
+    if (prevProps.currentLocation !== currentLocation && currentLocation !== undefined) {
       this.handlePropChange(currentLocation);
     }
   }

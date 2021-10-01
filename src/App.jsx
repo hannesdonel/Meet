@@ -13,7 +13,7 @@ import {
   extractLocations, getEvents, checkToken,
 } from './api';
 import './nprogress.css';
-import { ErrorAlert } from './Alert';
+import { ErrorAlert, WarningAlert } from './Alert';
 
 class App extends Component {
   constructor() {
@@ -38,8 +38,26 @@ class App extends Component {
     const { error } = await checkToken(accessToken);
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
-    this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: false });
-    if (code || error === 'invalid_token') {
+    if (!window.location.href.startsWith('http://localhost')) {
+      this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: false });
+    }
+    if (window.location.href.startsWith('http://localhost')) {
+      this.setState({ isLoading: true });
+      this.fetchData().then((data) => {
+        this.setState({
+          allEvents: data.events,
+          events: data.events,
+          locations: data.locations,
+          isLoading: false,
+        });
+        if (data.events.length > 99999999) {
+          this.setState({
+            showMore: true,
+          });
+        }
+      });
+    }
+    if (code || error !== 'invalid_token') {
       this.setState({ isLoading: true });
       this.fetchData().then((data) => {
         this.setState({
@@ -56,10 +74,10 @@ class App extends Component {
       });
     }
     window.addEventListener('offline', () => {
-      document.getElementById('offline-alert').classList.remove('display-none');
+      document.getElementById('offline-alert').style.opacity = 1;
     });
     window.addEventListener('online', () => {
-      document.getElementById('offline-alert').classList.add('display-none');
+      document.getElementById('offline-alert').style.opacity = 0;
     });
   }
 
@@ -85,37 +103,42 @@ class App extends Component {
     input.value = count;
   }
 
-  updateEvents = (location) => {
+  updateEvents = (location, genre) => {
     const { count, allEvents } = this.state;
-    const locationEvents = (location === '') ? allEvents : allEvents.filter((event) => event.location.includes(location));
+    let filteredEvents;
+    if (location !== undefined) {
+      filteredEvents = (location === '') ? allEvents : allEvents.filter((event) => event.location.includes(location));
+    } else {
+      filteredEvents = allEvents.filter(({ summary }) => summary.split(' ').toString().includes(genre));
+    }
 
     if (count.toString() === '0') {
       this.setValue();
       this.setState({
         currentLocation: location,
-        events: locationEvents,
+        events: filteredEvents,
         showMore: false,
         showWarningAlert: false,
       });
     } else if (count.toString() !== '0') {
-      const locationEventsShortened = locationEvents.slice(0, count);
+      const filteredEventsShortened = filteredEvents.slice(0, count);
       this.setValue();
-      if (locationEventsShortened.length === locationEvents.length) {
+      if (filteredEventsShortened.length === filteredEvents.length) {
         this.setState({
           currentLocation: location,
-          events: locationEventsShortened,
+          events: filteredEventsShortened,
           showMore: false,
           showWarningAlert: false,
         });
       } else {
         this.setState({
           currentLocation: location,
-          events: locationEventsShortened,
+          events: filteredEventsShortened,
           showMore: true,
           showWarningAlert: false,
         });
       }
-      if (locationEvents.length < parseInt(count, 10)) {
+      if (filteredEvents.length < parseInt(count, 10)) {
         this.setState({
           warningText: 'Your request did not produce any more results.',
           showWarningAlert: true,
@@ -206,15 +229,9 @@ class App extends Component {
             </div>
           </div>
           <div id="content">
-            <div
-              id="offline-alert"
-              className="display-none"
-            >
-              <ErrorAlert text="It seems you're offline." color="#ffffff" />
-            </div>
             <div id="chart-wrapper" className="display-none">
               <div id="genre-chart-wrapper">
-                <EventGenre events={events} />
+                <EventGenre updateEvents={this.updateEvents} events={events} />
               </div>
               <div id="city-chart-wrapper">
                 <ResponsiveContainer height="100%" width={1500}>
@@ -232,14 +249,6 @@ class App extends Component {
                     <Scatter data={this.getData()} fill="#8884d8" />
                   </ScatterChart>
                 </ResponsiveContainer>
-                <button
-                  id="clear-button"
-                  type="button"
-                  onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }}
-                  className={currentLocation === '' && count === 0 ? 'display-none' : ''}
-                >
-                  Clear filter
-                </button>
               </div>
             </div>
             <div id="chart-controls">
@@ -256,6 +265,21 @@ class App extends Component {
               showWarningAlert={showWarningAlert}
               warningText={warningText}
             />
+            <div
+              id="offline-alert"
+            >
+              <ErrorAlert text="It seems you're offline." color="#ffffff" />
+            </div>
+            <div
+              id="warning-alert"
+              role="button"
+              tabIndex={0}
+              onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }}
+              onKeyDown={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }}
+              className={currentLocation === '' && count === 0 ? 'display-none' : ''}
+            >
+              <WarningAlert text="Reset filter" color="#ffffff" />
+            </div>
           </div>
         </div>
       </div>

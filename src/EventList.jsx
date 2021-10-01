@@ -45,22 +45,23 @@ const EventList = ({
   };
 
   return (
-    <ul className="event-list">
-      {events.map((event) => (
-        <li className="event-list__item" key={event.id}>
-          <Event event={event} />
-        </li>
-      ))}
-
-      <div
-        className={showWarningAlert ? 'event-list__warning' : 'event-list__warning display-none'}
-      >
-        <WarningAlert
-          text={warningText}
-        />
-      </div>
-
-      {showMore === true && (
+    <div>
+      <ul className="event-list">
+        {events.map((event) => (
+          <li className="event-list__item" key={event.id}>
+            <Event event={event} />
+          </li>
+        ))}
+      </ul>
+      <div id="show-more-events-wrapper">
+        <div
+          className={showWarningAlert ? 'event-list__warning' : 'event-list__warning display-none'}
+        >
+          <WarningAlert
+            text={warningText}
+          />
+        </div>
+        {showMore === true && (
         <div
           className="show-more-events"
           onClick={() => handleShowMore()}
@@ -75,8 +76,9 @@ const EventList = ({
             keyboard_double_arrow_down
           </span>
         </div>
-      )}
-    </ul>
+        )}
+      </div>
+    </div>
   );
 };
 

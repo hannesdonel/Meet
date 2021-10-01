@@ -3,13 +3,6 @@ import {
   PieChart, Pie, Cell, ResponsiveContainer, Sector,
 } from 'recharts';
 
-// const data = [
-//   { name: 'Group A', value: 400, color: '#0088FE' },
-//   { name: 'Group B', value: 300, color: '#00C49F' },
-//   { name: 'Group C', value: 300, color: '#FFBB28' },
-//   { name: 'Group D', value: 200, color: '#FF8042' },
-// ];
-
 class EventGenre extends PureComponent {
   constructor(props) {
     super(props);
@@ -91,6 +84,7 @@ class EventGenre extends PureComponent {
 
     render() {
       const { activeIndex } = this.state;
+      const { updateEvents } = this.props;
       const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#99007f'];
 
       return (
@@ -106,8 +100,12 @@ class EventGenre extends PureComponent {
               labelLine={false}
               outerRadius="60%"
               dataKey="value"
+              animationBegin={0}
+              animationDuration={600}
               onMouseEnter={this.handleMouseOver}
+              onClick={this.handleMouseOver}
               onMouseLeave={this.handleMouseLeave}
+              onClickCapture={(event) => updateEvents(undefined, event.name)}
             >
               {this.getData().map((entry, index) => (
                 <Cell
