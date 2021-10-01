@@ -393,11 +393,11 @@ input[type="number"] {
     grid-template-columns: 50% 50%;
   }
 
-  .event-list__item:nth-child(2n+1) div {
+  .event-list__item:nth-child(2n+1) > div {
     margin-right: 0.5vw;
   }
 
-  .event-list__item:nth-child(2n) div {
+  .event-list__item:nth-child(2n) > div {
     margin-left: 0.5vw;
   }
 
@@ -475,6 +475,13 @@ input[type="number"] {
   border: none;
   outline: none;
   cursor: unset;
+}
+
+.event__location {
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
 }
 
 .event__show-more-button {

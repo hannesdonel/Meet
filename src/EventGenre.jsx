@@ -23,11 +23,11 @@ class EventGenre extends PureComponent {
       return data;
     }
 
-    handleMouseOver = (_, index) => {
-      this.setState({
-        activeIndex: index,
-      });
-    }
+  handleMouseOver = (_, index) => {
+    this.setState({
+      activeIndex: index,
+    });
+  }
 
     handleMouseLeave = () => {
       this.setState({
@@ -39,7 +39,7 @@ class EventGenre extends PureComponent {
       const RADIAN = Math.PI / 180;
       const {
         cx, cy, midAngle, innerRadius, outerRadius,
-        startAngle, endAngle, fill, percent,
+        startAngle, endAngle, fill, payload,
       } = props;
       const sin = Math.sin(-RADIAN * midAngle);
       const cos = Math.cos(-RADIAN * midAngle);
@@ -76,7 +76,7 @@ class EventGenre extends PureComponent {
             textAnchor={textAnchor}
             fill={fill}
           >
-            {`${(percent * 100).toFixed(2)}%`}
+            {payload}
           </text>
         </g>
       );
@@ -102,10 +102,9 @@ class EventGenre extends PureComponent {
               dataKey="value"
               animationBegin={0}
               animationDuration={600}
-              onMouseEnter={this.handleMouseOver}
-              onClick={this.handleMouseOver}
+              onMouseOver={this.handleMouseOver}
               onMouseLeave={this.handleMouseLeave}
-              onClickCapture={(event) => updateEvents(undefined, event.name)}
+              onClick={(event) => updateEvents(undefined, event.name)}
             >
               {this.getData().map((entry, index) => (
                 <Cell

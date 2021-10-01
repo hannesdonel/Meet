@@ -264,6 +264,7 @@ class App extends Component {
               count={count}
               showWarningAlert={showWarningAlert}
               warningText={warningText}
+              updateEvents={this.updateEvents}
             />
             <div
               id="offline-alert"
