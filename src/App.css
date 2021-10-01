@@ -24,7 +24,7 @@
   text-align: center;
   padding: 10px 5% 2%;
   min-height: 320px;
-  min-width: 220px;
+  min-width: 250px;
 }
 
 ul {
@@ -80,6 +80,7 @@ input[type="number"] {
   flex-direction: row;
   padding: 20px 0;
   border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--light-shadow);
 }
 
 .city-search {
@@ -205,7 +206,7 @@ input[type="number"] {
 }
 
 #content {
-  margin-top: 69px;
+  margin-top: 89px;
 }
 
 .offline-alert {
@@ -221,9 +222,37 @@ input[type="number"] {
   z-index: 1;
 }
 
-.recharts-responsive-container {
-  position: unset;
-  margin-top: max(99px, 2vh);
+#chart-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: 70vh;
+}
+
+.recharts-cartesian-axis-tick:hover {
+  cursor: pointer;
+}
+
+#clear-button {
+  position: absolute;
+  top: 70vh;
+  right: 5%;
+  box-shadow: var(--heavy-shadow);
+}
+
+#chart-controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@media all and (max-width: 400px) {
+  #chart-controls {
+    justify-content: space-evenly;
+  }
+}
+
+#hide-chart {
+  margin: 0 5px 0 2vw;
 }
 
 .event-list {

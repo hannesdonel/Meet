@@ -13,7 +13,7 @@ class NumberOfEvents extends Component {
           id="number-of-events__input"
           name="number-of-events__input"
           className="number-of-events__input"
-          defaultValue="32"
+          defaultValue="0"
           onChange={(e) => this.handleInputChange(e.target.value)}
         >
           <option className="number-of-events__option" value="1">1</option>

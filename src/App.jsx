@@ -23,7 +23,7 @@ class App extends Component {
       events: [],
       locations: [],
       currentLocation: '',
-      count: 32,
+      count: 0,
       isLoading: true,
       showMore: false,
       warningText: '',
@@ -43,11 +43,11 @@ class App extends Component {
       this.fetchData().then((data) => {
         this.setState({
           allEvents: data.events,
-          events: data.events.slice(0, 32),
+          events: data.events,
           locations: data.locations,
           isLoading: false,
         });
-        if (data.events.length > 32) {
+        if (data.events.length > 99999999) {
           this.setState({
             showMore: true,
           });
@@ -80,7 +80,7 @@ class App extends Component {
 
   updateEvents = (location) => {
     const { count, allEvents } = this.state;
-    const locationEvents = (location === '') ? allEvents : allEvents.filter((event) => event.location === location);
+    const locationEvents = (location === '') ? allEvents : allEvents.filter((event) => event.location.includes(location));
 
     if (count.toString() === '0') {
       this.setValue();
@@ -121,6 +121,14 @@ class App extends Component {
     const { locations, events } = this.state;
     const data = locations.map((location) => {
       const number = events.filter((event) => event.location === location).length;
+      if (location.includes('Dubai')) {
+        const city = location.split('- ').shift();
+        return { city, number };
+      }
+      if (location.includes('Sydney')) {
+        const city = location.split('NSW').shift();
+        return { city, number };
+      }
       const city = location.split(', ').shift();
       return { city, number };
     });
@@ -133,9 +141,25 @@ class App extends Component {
     });
   }
 
+  handleChartClick = (event) => {
+    const { value } = event;
+    document.getElementsByClassName('city-search__input')[0].value = value;
+    this.updateEvents(value);
+  }
+
+  handleShowClick = () => {
+    const chart = document.getElementById('chart-wrapper');
+    const { checked } = document.getElementById('hide-chart');
+    if (!checked) {
+      chart.classList.add('display-none');
+    } else {
+      chart.classList.remove('display-none');
+    }
+  }
+
   render() {
     const {
-      events, locations, showMore, count,
+      events, currentLocation, locations, showMore, count,
       isLoading, showWarningAlert, warningText, showWelcomeScreen,
     } = this.state;
 
@@ -166,7 +190,11 @@ class App extends Component {
         <div>
           <div id="search-bar-container">
             <div id="search-bar">
-              <CitySearch locations={locations} updateEvents={this.updateEvents} />
+              <CitySearch
+                locations={locations}
+                updateEvents={this.updateEvents}
+                currentLocation={currentLocation}
+              />
               <NumberOfEvents setEventCount={this.setEventCount} />
             </div>
           </div>
@@ -176,15 +204,37 @@ class App extends Component {
             >
               <ErrorAlert text="It seems you're offline." color="#ffffff" />
             </div>
-            <ResponsiveContainer height={400}>
-              <ScatterChart>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="city" name="City" type="category" />
-                <YAxis width={15} dataKey="number" name="Number of events" type="number" allowDecimals={false} />
-                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                <Scatter data={this.getData()} fill="#8884d8" />
-              </ScatterChart>
-            </ResponsiveContainer>
+            <div id="chart-wrapper" className="display-none">
+              <ResponsiveContainer height="100%" width={1500}>
+                <ScatterChart>
+                  <CartesianGrid strokeDasharray="3 3" onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }} />
+                  <XAxis
+                    onClick={(event) => { this.handleChartClick(event); }}
+                    dataKey="city"
+                    name="City"
+                    type="category"
+                  />
+                  {/* eslint-disable-next-line */}
+                <YAxis width={25} dataKey="number" name="Number of events" type="number" allowDecimals={false} />
+                  <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                  <Scatter data={this.getData()} fill="#8884d8" />
+                </ScatterChart>
+              </ResponsiveContainer>
+              <button
+                id="clear-button"
+                type="button"
+                onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }}
+                className={currentLocation === '' && count === 0 ? 'display-none' : ''}
+              >
+                Clear filter
+              </button>
+            </div>
+            <div id="chart-controls">
+              <label htmlFor="hide-chart">
+                <input id="hide-chart" type="checkbox" onClick={() => this.handleShowClick()} />
+                Show chart
+              </label>
+            </div>
             <EventList
               events={events}
               showMore={showMore}

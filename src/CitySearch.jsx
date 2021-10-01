@@ -18,6 +18,29 @@ class CitySearch extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { currentLocation } = this.props;
+    if (prevProps.currentLocation !== currentLocation) {
+      this.handlePropChange(currentLocation);
+    }
+  }
+
+  handlePropChange = (newLocation) => {
+    const { locations } = this.props;
+    const suggestionsToSet = locations
+      .filter((location) => location.toUpperCase().includes(newLocation.toUpperCase()));
+
+    this.setState({
+      query: newLocation,
+      suggestions: suggestionsToSet,
+      showSuggestions: false,
+      showInfoAlert: false,
+      infoText: '',
+      showErrorAlert: false,
+      errorText: '',
+    });
+  }
+
   handleInputChange = (value) => {
     const { locations } = this.props;
     const suggestionsToSet = locations
