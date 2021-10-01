@@ -7,6 +7,7 @@ import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import WelcomeScreen from './WelcomeScreen';
+import EventGenre from './EventGenre';
 
 import {
   extractLocations, getEvents, checkToken,
@@ -214,29 +215,34 @@ class App extends Component {
               <ErrorAlert text="It seems you're offline." color="#ffffff" />
             </div>
             <div id="chart-wrapper" className="display-none">
-              <ResponsiveContainer height="100%" width={1500}>
-                <ScatterChart>
-                  <CartesianGrid strokeDasharray="3 3" onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }} />
-                  <XAxis
-                    onClick={(event) => { this.handleChartClick(event); }}
-                    dataKey="city"
-                    name="City"
-                    type="category"
-                  />
-                  {/* eslint-disable-next-line */}
+              <div id="genre-chart-wrapper">
+                <EventGenre events={events} />
+              </div>
+              <div id="city-chart-wrapper">
+                <ResponsiveContainer height="100%" width={1500}>
+                  <ScatterChart>
+                    <CartesianGrid strokeDasharray="3 3" onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }} />
+                    <XAxis
+                      onClick={(event) => { this.handleChartClick(event); }}
+                      dataKey="city"
+                      name="City"
+                      type="category"
+                    />
+                    {/* eslint-disable-next-line */}
                 <YAxis width={25} dataKey="number" name="Number of events" type="number" allowDecimals={false} />
-                  <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                  <Scatter data={this.getData()} fill="#8884d8" />
-                </ScatterChart>
-              </ResponsiveContainer>
-              <button
-                id="clear-button"
-                type="button"
-                onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }}
-                className={currentLocation === '' && count === 0 ? 'display-none' : ''}
-              >
-                Clear filter
-              </button>
+                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                    <Scatter data={this.getData()} fill="#8884d8" />
+                  </ScatterChart>
+                </ResponsiveContainer>
+                <button
+                  id="clear-button"
+                  type="button"
+                  onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }}
+                  className={currentLocation === '' && count === 0 ? 'display-none' : ''}
+                >
+                  Clear filter
+                </button>
+              </div>
             </div>
             <div id="chart-controls">
               <label htmlFor="hide-chart">
