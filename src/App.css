@@ -209,7 +209,7 @@ input[type="number"] {
   margin-top: 89px;
 }
 
-.offline-alert {
+#offline-alert {
   display: flex;
   justify-content: center;
   position: fixed;
@@ -470,7 +470,7 @@ input[type="number"] {
 }
 
 .display-none {
-  display: none;
+  display: none !important;
 }
 
 @media all and (max-height: 400px) {

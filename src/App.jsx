@@ -54,6 +54,14 @@ class App extends Component {
         }
       });
     }
+    window.addEventListener('offline', () => {
+      console.log('offline');
+      document.getElementById('offline-alert').classList.remove('display-none');
+    });
+    window.addEventListener('online', () => {
+      console.log('online');
+      document.getElementById('offline-alert').classList.add('display-none');
+    });
   }
 
   fetchData = async () => {
@@ -200,7 +208,8 @@ class App extends Component {
           </div>
           <div id="content">
             <div
-              className={!navigator.onLine ? 'offline-alert' : 'offline-alert display-none'}
+              id="offline-alert"
+              className="display-none"
             >
               <ErrorAlert text="It seems you're offline." color="#ffffff" />
             </div>
