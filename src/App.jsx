@@ -38,7 +38,7 @@ class App extends Component {
     const { error } = await checkToken(accessToken);
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
-    // this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: false });
+    this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: false });
     if (code || error === 'invalid_token') {
       this.setState({ isLoading: true });
       this.fetchData().then((data) => {
@@ -56,11 +56,9 @@ class App extends Component {
       });
     }
     window.addEventListener('offline', () => {
-      console.log('offline');
       document.getElementById('offline-alert').classList.remove('display-none');
     });
     window.addEventListener('online', () => {
-      console.log('online');
       document.getElementById('offline-alert').classList.add('display-none');
     });
   }
