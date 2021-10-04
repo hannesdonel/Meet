@@ -142,7 +142,7 @@ input[type="number"] {
 .city-search__suggestions > li:last-child {
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
-  padding: 10px 0;
+  padding: 0;
   margin: 0;
 }
 
@@ -179,7 +179,7 @@ input[type="number"] {
   width: 100%;
   text-align: center;
   margin-top: 0;
-  padding-top: 8px;
+  padding: 9px 0 10px;
 }
 
 .city-search__all-button:hover {
