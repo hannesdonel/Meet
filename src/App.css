@@ -291,7 +291,7 @@ input[type="number"] {
   grid-template-columns: 50% 50%;
   margin-bottom: 2vh;
   height: 70vh;
-  max-height: 1200px;
+  max-height: 900px;
   opacity: 0;
   transition: opacity 0.5s;
 }
@@ -299,7 +299,7 @@ input[type="number"] {
 #genre-chart-wrapper {
   margin: 15px;
   height: 70vh;
-  max-height: 1200px;
+  max-height: 900px;
   -webkit-animation: 0.25s fade;
   animation: 0.25s fade;
 }
@@ -309,7 +309,7 @@ input[type="number"] {
   overflow-y: hidden;
   margin: 15px 0 0 15px;
   height: 70vh;
-  max-height: 1200px;
+  max-height: 900px;
   -webkit-animation: 0.25s fade;
   animation: 0.25s fade;
 }
@@ -387,17 +387,19 @@ input[type="number"] {
     grid-template-columns: 1fr 1fr 1fr;
   }
 
-  .event-list__item:nth-child(2n+1) > div {
-    margin-right: 0;
-  }
-
-  .event-list__item:nth-child(2n) > div {
+  .event-list__item:nth-child(3n-2) > div {
+    margin-right: 0.6vw;
     margin-left: 0;
   }
 
+  .event-list__item:nth-child(3n) > div {
+    margin-left: 0.6vw;
+    margin-right: 0;
+  }
+
   .event-list__item:nth-child(3n-1) > div {
-    margin-left: 1vw;
-    margin-right: 1vw;
+    margin-left: 0.3vw;
+    margin-right: 0.3vw;
   }
 
   .event-list__item:only-of-type {
