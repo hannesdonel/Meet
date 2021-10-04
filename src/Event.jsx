@@ -17,7 +17,7 @@ class Event extends Component {
   }
 
   render() {
-    const { event, updateEvents } = this.props;
+    const { event } = this.props;
     const { show, turn } = this.state;
 
     return (
@@ -25,19 +25,7 @@ class Event extends Component {
         <button type="button" className="event__window" onClick={() => this.toggleShow()}>
           <ul>
             <li className="event__summary">{event.summary}</li>
-            <li
-              className="event__location"
-            >
-              <div
-                role="button"
-                type="button"
-                tabIndex={0}
-                onClick={() => updateEvents(event.location)}
-                onKeyDown={() => updateEvents(event.location)}
-              >
-                {event.location}
-              </div>
-            </li>
+            <li className="event__location">{event.location}</li>
             <li className="event__date">
               <p>
                 Date:
@@ -55,7 +43,7 @@ class Event extends Component {
               </p>
             </li>
             {show === true && (
-            <p className="event__details">{event.description}</p>
+              <p className="event__details">{event.description}</p>
             )}
             <span
               className={`material-icons event__show-more-button ${turn ? '' : 'turn'}`}

@@ -3,7 +3,7 @@ import Event from './Event';
 import { WarningAlert } from './Alert';
 
 const EventList = ({
-  events, showMore, setEventCount, count, showWarningAlert, warningText, updateEvents,
+  events, showMore, setEventCount, count, showWarningAlert, warningText,
 }) => {
   let newCount;
   const handleShowMore = () => {
@@ -45,11 +45,11 @@ const EventList = ({
   };
 
   return (
-    <div>
-      <ul className="event-list">
+    <div id="event-list-wrapper">
+      <ul id="event-list">
         {events.map((event) => (
           <li className="event-list__item" key={event.id}>
-            <Event event={event} updateEvents={updateEvents} />
+            <Event event={event} />
           </li>
         ))}
       </ul>

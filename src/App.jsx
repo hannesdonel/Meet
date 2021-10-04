@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import {
-  ScatterChart, CartesianGrid, XAxis, YAxis, Tooltip, Scatter, ResponsiveContainer,
-} from 'recharts';
 import './App.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import WelcomeScreen from './WelcomeScreen';
 import EventGenre from './EventGenre';
+import EventCity from './EventCity';
 
+import { checkToken } from './api';
 import {
-  extractLocations, getEvents, checkToken,
-} from './api';
+  fetchData, handleShowClick,
+  offlineListener, onlineListener,
+} from './services';
 import './nprogress.css';
 import { ErrorAlert, WarningAlert } from './Alert';
 
@@ -43,7 +43,7 @@ class App extends Component {
     }
     if (window.location.href.startsWith('http://localhost')) {
       this.setState({ isLoading: true });
-      this.fetchData().then((data) => {
+      fetchData().then((data) => {
         this.setState({
           allEvents: data.events,
           events: data.events,
@@ -59,7 +59,7 @@ class App extends Component {
     }
     if (code || error !== 'invalid_token') {
       this.setState({ isLoading: true });
-      this.fetchData().then((data) => {
+      fetchData().then((data) => {
         this.setState({
           allEvents: data.events,
           events: data.events,
@@ -73,34 +73,8 @@ class App extends Component {
         }
       });
     }
-    window.addEventListener('offline', () => {
-      document.getElementById('offline-alert').style.opacity = 1;
-    });
-    window.addEventListener('online', () => {
-      document.getElementById('offline-alert').style.opacity = 0;
-    });
-  }
-
-  fetchData = async () => {
-    try {
-      const events = await getEvents();
-      const locations = extractLocations(events);
-      return { events, locations };
-    } catch (error) {
-      return error;
-    }
-  };
-
-  setEventCount = async (number) => {
-    const { currentLocation } = this.state;
-    await this.setState({ count: number });
-    this.updateEvents(currentLocation);
-  }
-
-  setValue = () => {
-    const { count } = this.state;
-    const input = document.getElementById('number-of-events__input');
-    input.value = count;
+    offlineListener();
+    onlineListener();
   }
 
   updateEvents = (location, genre) => {
@@ -145,7 +119,7 @@ class App extends Component {
         });
       }
     }
-  }
+  };
 
   getData = () => {
     const { locations, events } = this.state;
@@ -165,27 +139,27 @@ class App extends Component {
     return data;
   };
 
-  toggleLoadingScreen = (boolean) => {
-    this.setState({
-      isLoading: boolean,
-    });
+  setValue = () => {
+    const { count } = this.state;
+    const input = document.getElementById('number-of-events__input');
+    input.value = count;
+  };
+
+  setEventCount = async (number) => {
+    const { currentLocation } = this.state;
+    await this.setState({ count: number });
+    this.updateEvents(currentLocation);
+  };
+
+  setCurrentLocation = (location) => {
+    this.setState({ currentLocation: location });
   }
 
   handleChartClick = (event) => {
     const { value } = event;
     document.getElementsByClassName('city-search__input')[0].value = value;
     this.updateEvents(value);
-  }
-
-  handleShowClick = () => {
-    const chart = document.getElementById('chart-wrapper');
-    const { checked } = document.getElementById('hide-chart');
-    if (!checked) {
-      chart.classList.add('display-none');
-    } else {
-      chart.classList.remove('display-none');
-    }
-  }
+  };
 
   render() {
     const {
@@ -197,10 +171,17 @@ class App extends Component {
       return (
         <div className="loader-container">
           <p>loading...</p>
-          <div
-            className={!navigator.onLine ? 'offline-alert' : 'offline-alert display-none'}
-          >
-            <ErrorAlert text="It seems you're offline." color="#ffffff" />
+
+          {/* Alert section */}
+
+          <div id="alert-wrapper">
+            <div
+              id="offline-alert"
+              className={!navigator.onLine ? '' : 'display-none'}
+            >
+              <ErrorAlert text="It seems you're offline." color="#ffffff" />
+            </div>
+
           </div>
         </div>
       );
@@ -217,72 +198,84 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div>
-          <div id="search-bar-container">
-            <div id="search-bar">
-              <CitySearch
-                locations={locations}
-                updateEvents={this.updateEvents}
-                currentLocation={currentLocation}
-              />
-              <NumberOfEvents setEventCount={this.setEventCount} />
-            </div>
-          </div>
-          <div id="content">
-            <div id="chart-wrapper" className="display-none">
-              <div id="genre-chart-wrapper">
-                <EventGenre updateEvents={this.updateEvents} events={events} />
-              </div>
-              <div id="city-chart-wrapper">
-                <ResponsiveContainer height="100%" width={1500}>
-                  <ScatterChart>
-                    <CartesianGrid strokeDasharray="3 3" onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }} />
-                    <XAxis
-                      onClick={(event) => { this.handleChartClick(event); }}
-                      dataKey="city"
-                      name="City"
-                      type="category"
-                    />
-                    {/* eslint-disable-next-line */}
-                <YAxis width={25} dataKey="number" name="Number of events" type="number" allowDecimals={false} />
-                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                    <Scatter data={this.getData()} fill="#8884d8" />
-                  </ScatterChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-            <div id="chart-controls">
-              <label htmlFor="hide-chart">
-                <input id="hide-chart" type="checkbox" onClick={() => this.handleShowClick()} />
-                Show chart
-              </label>
-            </div>
-            <EventList
-              events={events}
-              showMore={showMore}
-              setEventCount={this.setEventCount}
-              count={count}
-              showWarningAlert={showWarningAlert}
-              warningText={warningText}
+
+        {/* Search bar */}
+
+        <div id="search-bar-container">
+          <div id="search-bar">
+            <CitySearch
+              locations={locations}
               updateEvents={this.updateEvents}
+              currentLocation={currentLocation}
             />
-            <div
-              id="offline-alert"
-            >
-              <ErrorAlert text="It seems you're offline." color="#ffffff" />
-            </div>
-            <div
-              id="warning-alert"
-              role="button"
-              tabIndex={0}
-              onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }}
-              onKeyDown={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }}
-              className={currentLocation === '' && count === 0 ? 'display-none' : ''}
-            >
-              <WarningAlert text="Reset filter" color="#ffffff" />
-            </div>
+            <NumberOfEvents setEventCount={this.setEventCount} />
           </div>
         </div>
+
+        <div id="spaceholder" />
+
+        {/* Content */}
+
+        <div id="content">
+
+          {/* Chart section */}
+
+          <div
+            id="chart-wrapper"
+          >
+            <div id="genre-chart-wrapper">
+              <EventGenre updateEvents={this.updateEvents} events={events} />
+            </div>
+            <div id="city-chart-wrapper">
+              <EventCity
+                setCurrentLocation={this.setCurrentLocation}
+                setEventCount={this.setEventCount}
+                handleChartClick={this.handleChartClick}
+                getData={this.getData}
+              />
+            </div>
+          </div>
+          <div id="chart-controls">
+            <label htmlFor="hide-chart">
+              <input id="hide-chart" type="checkbox" onClick={() => handleShowClick()} />
+              Show chart
+            </label>
+          </div>
+
+          {/* Event list */}
+
+          <EventList
+            events={events}
+            showMore={showMore}
+            setEventCount={this.setEventCount}
+            count={count}
+            showWarningAlert={showWarningAlert}
+            warningText={warningText}
+            updateEvents={this.updateEvents}
+          />
+        </div>
+
+        {/* Alert section */}
+
+        <div id="alert-wrapper">
+          <div
+            id="warning-alert"
+            role="button"
+            tabIndex={0}
+            onClick={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }}
+            onKeyDown={async () => { await this.setState({ currentLocation: '' }); this.setEventCount(0); }}
+            className={currentLocation === '' && count === 0 ? 'display-none' : 'fadeIn'}
+          >
+            <WarningAlert text="Reset filter" color="#ffffff" />
+          </div>
+          <div
+            id="offline-alert"
+            className={!navigator.onLine ? '' : 'display-none'}
+          >
+            <ErrorAlert text="It seems you're offline." color="#ffffff" />
+          </div>
+        </div>
+
       </div>
     );
   }

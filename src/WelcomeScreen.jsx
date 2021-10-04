@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './WelcomeScreen.css';
 
 import { getAccessToken } from './api';
 
@@ -26,7 +26,7 @@ function WelcomeScreen(props) {
                 alt="Google sign-in"
               />
             </div>
-            <div className="btn-text">
+            <div className="google-btn--text">
               <b>Sign in with google</b>
             </div>
           </button>

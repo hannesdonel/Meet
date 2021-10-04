@@ -1,0 +1,70 @@
+.welcome-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  background: white;
+  min-height: 320px;
+  min-width: 220px;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 16px 0 0;
+  background-color: #4285f4;
+  border: solid 2px var(--border-color);
+  border-radius: 5px;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  transition: 0.25s;
+}
+
+.google-btn:hover {
+  box-shadow: 1px 4px 5px 1px #4285f4;
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
+.google-btn:active {
+  background: #1669f2;
+}
+
+.google-icon-wrapper {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  height: 40px;
+  width: 40px;
+}
+
+.google-icon {
+  transition: 0.25s;
+}
+
+.google-btn:hover img {
+  transform: scale(0.9);
+}
+
+.google-btn--text {
+  margin: 0 8px;
+  color: white;
+}
+
+.privacy-policy {
+  position: absolute;
+  bottom: 10px;
+}
+
+@media all and (max-height: 400px) {
+  .privacy-policy {
+    margin-top: 20px;
+    position: unset;
+  }
+}
