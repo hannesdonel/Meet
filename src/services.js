@@ -17,7 +17,7 @@ export const handleShowClick = () => {
   const chartWrapper = document.getElementById('chart-wrapper');
   const { checked } = document.getElementById('hide-chart');
   if (!checked) {
-    container.style.marginTop = 'max(-1200px, -70vh)';
+    container.style.marginTop = 'max(-900px, -70vh)';
     chartWrapper.style.opacity = 0;
   } else {
     container.style.marginTop = '2vh';
