@@ -14,6 +14,7 @@
   --light-grey: rgba(238, 238, 238, 0.5);
   --light-grey-no-opacity: rgb(238, 238, 238);
   --charts-max-height: 900px;
+  --max-width: 1800px;
 }
 
 * {
@@ -31,7 +32,7 @@
   padding: 10px 5% 2%;
   min-height: 320px;
   min-width: 250px;
-  max-width: 1800px;
+  max-width: var(--max-width);
   width: 100%;
   -webkit-animation: fade 0.25s;
   animation: fade 0.25s;
@@ -69,7 +70,7 @@ p {
   left: 0;
   right: 0;
   width: 100%;
-  max-width: 1800px;
+  max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 5%;
   z-index: 1;
