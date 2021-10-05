@@ -21,27 +21,33 @@ const extractLocations = (events) => {
 
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
-  /* eslint-disable-next-line */
-  const { access_token } = await fetch(
-    `${TOKEN_ENDPOINT}/${encodeCode}`,
-  )
-    .then((res) => res.json())
-    .catch((error) => error);
-
-  localStorage.setItem('access_token', access_token);
-
-  /* eslint-disable-next-line */
-  return access_token;
+  if (encodeCode) {
+    try {
+      /* eslint-disable-next-line */
+      const { access_token } = await fetch(
+        `${TOKEN_ENDPOINT}/${encodeCode}`,
+      );
+      localStorage.setItem('access_token', access_token);
+      return access_token.json();
+    } catch (error) {
+      return error;
+    }
+  }
+  return { error: 'Something went wrong.' };
 };
 
-const checkToken = (accessToken) => {
-  const result = fetch(
-    `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`,
-  )
-    .then((res) => res.json())
-    .catch((error) => error);
-
-  return result;
+const checkToken = async (accessToken) => {
+  if (accessToken) {
+    try {
+      const result = fetch(
+        `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`,
+      );
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+  return { error: 'Something went wrong' };
 };
 
 const getAccessToken = async () => {
