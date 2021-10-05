@@ -50,3 +50,28 @@ export const onlineListener = () => window.addEventListener('online', () => {
     offlineAlert.classList.remove('fadeOut');
   });
 });
+
+export const handleScroll = () => {
+  const myTimeOut = (action, time) => {
+    setTimeout(() => action, time);
+  };
+
+  const scrolled = window.scrollY;
+  const toTopButton = document.getElementById('toTop');
+  if (scrolled > 1000) {
+    toTopButton.classList.add('fadeIn');
+    toTopButton.classList.remove('fadeOut');
+    myTimeOut(toTopButton.style.display = 'block', 250);
+  } else if (scrolled < 1000) {
+    myTimeOut(toTopButton.style.display = 'none', 3000);
+    toTopButton.classList.remove('fadeIn');
+    toTopButton.classList.add('fadeOut');
+  }
+};
+
+export const toTopFunction = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+};

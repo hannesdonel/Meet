@@ -14,7 +14,7 @@ class EventGenre extends PureComponent {
 
   getData = () => {
     const { events } = this.props;
-    const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
+    const genres = ['JavaScript', 'React', 'Node', 'jQuery', 'Angular'];
 
     const data = genres.map((genre) => {
       const value = events.filter(({ summary }) => summary.split(' ').toString().includes(genre)).length;

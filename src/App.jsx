@@ -9,8 +9,8 @@ import EventCity from './EventCity';
 
 import { checkToken } from './api';
 import {
-  fetchData, handleShowClick,
-  offlineListener, onlineListener,
+  fetchData, handleShowClick, toTopFunction,
+  offlineListener, onlineListener, handleScroll,
 } from './services';
 import './nprogress.css';
 import { ErrorAlert, WarningAlert } from './Alert';
@@ -75,6 +75,7 @@ class App extends Component {
     }
     offlineListener();
     onlineListener();
+    window.addEventListener('scroll', handleScroll);
   }
 
   updateEvents = (location, genre) => {
@@ -275,6 +276,17 @@ class App extends Component {
             <ErrorAlert text="It seems you're offline." color="#ffffff" />
           </div>
         </div>
+
+        {/* To Top button */}
+
+        <button
+          onClick={() => toTopFunction()}
+          type="button"
+          id="toTop"
+          title="Go to top"
+        >
+          &#8593;
+        </button>
 
       </div>
     );

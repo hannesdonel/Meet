@@ -8,6 +8,8 @@
   --font-size-bigger: 18px;
   --border-radius: 5px;
   --border-color: rgb(204, 204, 204);
+  --lightblue-background: rgba(3, 112, 139, 0.075);
+  --lightblue-background-no-opacity: rgb(236, 244, 246);
   --light-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
   --light-shadow-bottom: 0 5px 5px -5px rgba(0, 0, 0, 0.158);
   --heavy-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
@@ -45,6 +47,29 @@ ul {
 
 p {
   margin: 5px 0;
+}
+
+#toTop {
+  display: none;
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  background-color: var(--lightblue-background-no-opacity);
+  color: inherit;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  transition: 0.1s;
+  box-shadow: var(--heavy-shadow);
+}
+
+#toTop:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 }
 
 /* Loader */
@@ -321,6 +346,16 @@ input[type="number"] {
   cursor: pointer;
 }
 
+.recharts-pie-labels {
+  visibility: visible;
+}
+
+@media all and (max-width: 600px) {
+  .recharts-pie-labels {
+    visibility: hidden;
+  }
+}
+
 #city-chart-wrapper {
   overflow-x: scroll;
   overflow-y: hidden;
@@ -364,6 +399,11 @@ input[type="number"] {
   #chart-wrapper {
     display: flex;
     flex-direction: column;
+  }
+
+  .recharts-legend-wrapper {
+    bottom: 0;
+    top: 70%;
   }
 }
 
@@ -479,7 +519,7 @@ input[type="number"] {
   border-radius: var(--border-radius);
   position: relative;
   box-shadow: var(--light-shadow);
-  background-color: rgba(3, 112, 139, 0.075);
+  background-color: var(--lightblue-background);
   transition-duration: 0.3s;
 }
 
