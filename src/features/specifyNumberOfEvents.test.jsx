@@ -10,27 +10,29 @@ defineFeature(feature, (test) => {
   let AppWrapper;
   beforeAll(async () => {
     AppWrapper = await mount(<App />);
-    await AppWrapper.instance().componentDidMount();
-    AppWrapper.update();
   });
 
-  test('When user hasn’t specified a number, 32 is the default number', ({ given, when, then }) => {
+  afterAll(() => {
+    AppWrapper.unmount();
+  });
+
+  test('When user hasn’t specified a number, "all" is the default number', async ({ given, when, then }) => {
     given('a list of events', () => {
-      expect(AppWrapper.find('.event-list')).toHaveLength(1);
+      expect(AppWrapper.find('#event-list').exists()).toEqual(true);
     });
 
     when('the user hasn’t specified a number', () => {
 
     });
 
-    then('a maximum of 32 events gets displayed', () => {
-      expect(AppWrapper.state('count')).toEqual(32);
+    then('all events gets displayed', () => {
+      expect(AppWrapper.state('count')).toEqual(0);
     });
   });
 
   test('User can change the number of events they want to see', ({ given, when, then }) => {
     given('a list of events', () => {
-      expect(AppWrapper.find('.event-list')).toHaveLength(1);
+      expect(AppWrapper.find('#event-list').exists()).toEqual(true);
     });
 
     when('the user changes the number of events to be displayed', () => {

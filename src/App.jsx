@@ -16,8 +16,8 @@ import './nprogress.css';
 import { ErrorAlert, WarningAlert } from './Alert';
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       allEvents: [],

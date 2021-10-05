@@ -46,9 +46,9 @@ describe('<CitySearch /> component', () => {
   test('render list of suggestions correctly', () => {
     CitySearchWrapper.setState({ suggestions: locations });
     const suggestions = CitySearchWrapper.state('suggestions');
-    expect(CitySearchWrapper.find('.city-search__suggestions li')).toHaveLength(suggestions.length + 1);
+    expect(CitySearchWrapper.find('.city-search__suggestions li')).toHaveLength(suggestions.length + 2);
     for (let i = 0; i < suggestions.length; i += 1) {
-      expect(CitySearchWrapper.find('.city-search__suggestions li').at(i).text()).toBe(suggestions[i]);
+      expect(CitySearchWrapper.find('.city-search__suggestions li').at(i + 1).text()).toBe(suggestions[i]);
     }
   });
 
