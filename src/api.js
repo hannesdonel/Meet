@@ -19,10 +19,10 @@ const extractLocations = (events) => {
   return locations;
 };
 
-const getToken = (code) => {
+const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   /* eslint-disable-next-line */
-  const { access_token } = fetch(
+  const { access_token } = await fetch(
     `${TOKEN_ENDPOINT}/${encodeCode}`,
   )
     .then((res) => res.json())
