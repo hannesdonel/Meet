@@ -23,7 +23,6 @@ class EventGenre extends PureComponent {
       }
       return { name: genre, value: null };
     });
-    console.log(data);
     return data;
   }
 
