@@ -244,6 +244,7 @@ input[type="number"] {
 }
 
 #content {
+  width: 100%;
   margin-top: max(calc(var(--charts-max-height) * -1), -70vh);
   transition: margin-top 0.5s ease-in-out;
 }
@@ -324,6 +325,7 @@ input[type="number"] {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-top: max(20px, 2vh);
 }
 
 @media all and (max-width: 500px) {

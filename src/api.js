@@ -34,8 +34,8 @@ const getToken = async (code) => {
   return access_token;
 };
 
-const checkToken = async (accessToken) => {
-  const result = await fetch(
+const checkToken = (accessToken) => {
+  const result = fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`,
   )
     .then((res) => res.json())

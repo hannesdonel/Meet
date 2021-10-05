@@ -109,6 +109,8 @@ class EventGenre extends PureComponent {
             {this.getData().map((entry, index) => (
               <Cell
                 fill={COLORS[index % COLORS.length]}
+                  /* eslint-disable-next-line */
+                  key={index}
               />
             ))}
           </Pie>
