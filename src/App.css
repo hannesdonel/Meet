@@ -77,6 +77,12 @@ p {
   background: rgb(255, 255, 255);
 }
 
+@media all and (max-height: 400px) {
+  #search-bar-container {
+    position: absolute;
+  }
+}
+
 #search-bar {
   display: flex;
   flex-direction: row;
