@@ -307,6 +307,14 @@ input[type="number"] {
   animation: 0.25s fade;
 }
 
+.recharts-legend-item {
+  padding: 0 1vw 1vh;
+}
+
+.recharts-legend-item:hover {
+  cursor: pointer;
+}
+
 #city-chart-wrapper {
   overflow-x: scroll;
   overflow-y: hidden;

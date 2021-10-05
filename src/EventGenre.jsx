@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  PieChart, Pie, Cell, ResponsiveContainer, Sector,
+  PieChart, Pie, Cell, ResponsiveContainer, Sector, Legend,
 } from 'recharts';
 
 class EventGenre extends PureComponent {
@@ -18,8 +18,12 @@ class EventGenre extends PureComponent {
 
     const data = genres.map((genre) => {
       const value = events.filter(({ summary }) => summary.split(' ').toString().includes(genre)).length;
-      return { name: genre, value };
+      if (value !== 0) {
+        return { name: genre, value };
+      }
+      return { name: genre, value: null };
     });
+    console.log(data);
     return data;
   }
 
@@ -82,6 +86,13 @@ class EventGenre extends PureComponent {
     );
   };
 
+  customLabel = (data) => {
+    if (data.value === null) {
+      return null;
+    }
+    return data.name;
+  }
+
   render() {
     const { activeIndex } = this.state;
     const { updateEvents } = this.props;
@@ -96,7 +107,7 @@ class EventGenre extends PureComponent {
             data={this.getData()}
             cx="50%"
             cy="50%"
-            label={({ name }) => `${name}`}
+            label={({ payload }) => this.customLabel(payload)}
             labelLine={false}
             outerRadius="60%"
             dataKey="value"
@@ -114,6 +125,10 @@ class EventGenre extends PureComponent {
               />
             ))}
           </Pie>
+          <Legend
+            verticalAlign="bottom"
+            onClick={(event) => updateEvents(undefined, event.value)}
+          />
         </PieChart>
       </ResponsiveContainer>
     );
