@@ -2,6 +2,8 @@
 
 This is a serverless PWA that provides information on coding events in a specific town taken from an event calendar. All data is visualized with two beautiful, clickable charts.
 
+<a href="https://hannesdonel.github.io/Meet/">Try the app in action.</a>
+
 <img src="./assets/example1.png" alt="Example Image 1" width="49.5%"><img width="1%"><img src="./assets/example2.png" alt="Example Image 2" width="49.5%">
 
 
