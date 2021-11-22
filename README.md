@@ -2,7 +2,7 @@
 
 This is a serverless PWA that provides information on coding events in a specific town taken from an event calendar. All data is visualized with two beautiful, clickable charts.
 
-<img src="./assets/example1.png" alt="Example Image 1" width="49,5%"><img width="1%"><img src="./assets/example2.png" alt="Example Image 2" width="49,5%">
+<img src="./assets/example1.png" alt="Example Image 1" width="49.5%"><img width="1%"><img src="./assets/example2.png" alt="Example Image 2" width="49.5%">
 
 
 ## Technologies
