@@ -34,15 +34,15 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const accessToken = localStorage.getItem('access_token');
-    const { error } = await checkToken(accessToken);
+    const tokenCheck = await checkToken();
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
-    if (window.location.href.startsWith('http://localhost')) {
-      // You can either set to fetch data from real database or to use mockData
+    if (code || tokenCheck.ok) {
+      this.setState({ showWelcomeScreen: !(code || tokenCheck.ok) });
       this.fetchApi();
-    } else if (code || error !== 'invalid_token') {
-      this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token') });
+    }
+    // If your testing locally you'll receive mocData even without a token
+    if (window.location.href.startsWith('http://localhost')) {
       this.fetchApi();
     }
     offlineListener();
@@ -114,6 +114,7 @@ class App extends Component {
     }
   };
 
+  // Order and filter data to be conveniently
   getData = () => {
     const { locations, events } = this.state;
     const data = locations.map((location) => {
@@ -132,12 +133,14 @@ class App extends Component {
     return data;
   };
 
+  // Sync the count input with the count set externally to components state
   setValue = () => {
     const { count } = this.state;
     const input = document.getElementById('number-of-events__input');
     input.value = count;
   };
 
+  // Restricts the number of events to be displayed
   setEventCount = async (number) => {
     const { currentLocation } = this.state;
     await this.setState({ count: number });

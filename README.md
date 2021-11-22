@@ -2,9 +2,16 @@
 
 This is an application that provides you information on events in a specific town. You are in advance able to sync events you'd like to visit with your personal calendar.
 
+<img src="./assets/example1.png" alt="Example Image 1" width="48%">     <img src="./assets/example2.png" alt="Example Image 2" width="48%">
+
 ## Technologies
 
---
+- HTML, CSS, JavaScript
+- AWS Lambda
+- Serverless
+- React
+- Recharts
+- Axios
 
 ## Functionality
 

@@ -25,6 +25,7 @@ class CitySearch extends Component {
     }
   }
 
+  // Update all props if one has changed
   handlePropChange = (newLocation) => {
     const { locations } = this.props;
     const suggestionsToSet = locations
@@ -41,6 +42,7 @@ class CitySearch extends Component {
     });
   }
 
+  // Gets invoked when search input changes
   handleInputChange = (value) => {
     const { locations } = this.props;
     const suggestionsToSet = locations
@@ -80,6 +82,7 @@ class CitySearch extends Component {
     }
   }
 
+  // If element on suggestions list is clicked
   handleSuggestionClick = (suggestion) => {
     const { updateEvents } = this.props;
     updateEvents(suggestion);
