@@ -15,12 +15,14 @@ const credentials = {
   redirect_uris: ['https://hannesdonel.github.io/Meet/'],
   javascript_origins: ['https://hannesdonel.github.io', 'http://localhost:3000'],
 };
+
 const {
   client_secret: clientSecret,
   client_id: clientId,
   redirect_uris: redirectUris,
   calendar_id: calendarId,
 } = credentials;
+
 const oAuth2Client = new OAuth2(
   clientId,
   clientSecret,

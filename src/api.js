@@ -3,6 +3,7 @@ import NProgress from 'nprogress';
 import mockData from './mock-data';
 import { AUTH_ENDPOINT, EVENTS_ENDPOINT, TOKEN_ENDPOINT } from './config';
 
+// Clean up URL after query
 const removeQuery = () => {
   let newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
   if (window.history.pushState && window.location.pathname) {
@@ -13,12 +14,14 @@ const removeQuery = () => {
   }
 };
 
+// Returns an array only with available locations
 const extractLocations = (events) => {
   const extractedLocations = events.map((event) => event.location);
   const locations = [...new Set(extractedLocations)];
   return locations;
 };
 
+// Gets token from server
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   /* eslint-disable-next-line */
@@ -34,6 +37,7 @@ const getToken = async (code) => {
   return access_token;
 };
 
+// Checks if token is valid
 const checkToken = (accessToken) => {
   const result = fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`,
@@ -44,6 +48,7 @@ const checkToken = (accessToken) => {
   return result;
 };
 
+// Checks if there's already a valid token available and returns it. If not, it gets a new one.
 const getAccessToken = async () => {
   const accessToken = localStorage.getItem('access_token');
   const tokenCheck = accessToken && (await checkToken(accessToken));
@@ -63,6 +68,7 @@ const getAccessToken = async () => {
   return accessToken;
 };
 
+// Get all events available
 const getEvents = async () => {
   NProgress.start();
 
