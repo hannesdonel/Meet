@@ -2,7 +2,7 @@
 
 This is a serverless PWA that provides information on coding events in a specific town taken from an event calendar. All data is visualized with two beautiful, clickable charts.
 
-<img src="./assets/example1.png" alt="Example Image 1" width="48%"><span width="4%" /><img src="./assets/example2.png" alt="Example Image 2" width="48%">
+<img src="./assets/example1.png" alt="Example Image 1" width="48%"><span width="4%"></span><img src="./assets/example2.png" alt="Example Image 2" width="48%">
 
 
 ## Technologies
@@ -15,7 +15,8 @@ This is a serverless PWA that provides information on coding events in a specifi
 - Recharts
 - Axios
 
-I tracked the apps performance with <b>Atatus</b>.
+I tracked the apps performance with <b>Atatus</b>.<br>
+The app passes <a href="https://developers.google.com/web/tools/lighthouse/">Lighthouse’s PWA checklist.<a>
 
 
 ## Functionality
