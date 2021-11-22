@@ -33,6 +33,8 @@ The app passes <a href="https://developers.google.com/web/tools/lighthouse/">Lig
 
 ## Get started
 
+I'm using npm throughout this tutorial, you can of course use another package manager.
+
 #### Run the app
 - First of all run:
 
