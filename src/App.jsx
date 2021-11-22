@@ -38,46 +38,38 @@ class App extends Component {
     const { error } = await checkToken(accessToken);
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
-    if (!window.location.href.startsWith('http://localhost')) {
-      this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token'), isLoading: false });
-    }
     if (window.location.href.startsWith('http://localhost')) {
-      this.setState({ isLoading: true });
-      fetchData().then((data) => {
-        this.setState({
-          allEvents: data.events,
-          events: data.events,
-          locations: data.locations,
-          isLoading: false,
-        });
-        if (data.events.length > 99999999) {
-          this.setState({
-            showMore: true,
-          });
-        }
-      });
-    }
-    if (code || error !== 'invalid_token') {
-      this.setState({ isLoading: true });
-      fetchData().then((data) => {
-        this.setState({
-          allEvents: data.events,
-          events: data.events,
-          locations: data.locations,
-          isLoading: false,
-        });
-        if (data.events.length > 99999999) {
-          this.setState({
-            showMore: true,
-          });
-        }
-      });
+      // You can either set to fetch data from real database or to use mockData
+      this.fetchApi();
+    } else if (code || error !== 'invalid_token') {
+      this.setState({ showWelcomeScreen: !(code || error !== 'invalid_token') });
+      this.fetchApi();
     }
     offlineListener();
     onlineListener();
     window.addEventListener('scroll', handleScroll);
   }
 
+  // Loads data from API and sets state.
+  fetchApi = () => {
+    this.setState({ isLoading: true });
+    fetchData().then((data) => {
+      this.setState({
+        allEvents: data.events,
+        events: data.events,
+        locations: data.locations,
+        isLoading: false,
+      });
+      if (data.events.length > 99999999) {
+        this.setState({
+          showMore: true,
+        });
+      }
+    });
+  }
+
+  // If any filter is set or the search gets deployed, this function
+  // updates the list of events to be displayed.
   updateEvents = (location, genre) => {
     const { count, allEvents } = this.state;
     let filteredEvents;
