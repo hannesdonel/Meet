@@ -37,11 +37,14 @@ class App extends Component {
     const tokenCheck = await checkToken();
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
+    this.setState({
+      showWelcomeScreen: !(code || tokenCheck.ok),
+      isLoading: (code || tokenCheck.ok),
+    });
     if (code || tokenCheck.ok) {
-      this.setState({ showWelcomeScreen: !(code || tokenCheck.ok) });
       this.fetchApi();
     }
-    // If your testing locally you'll receive mocData even without a token
+    // If your testing locally you'll receive mockData even without a token
     if (window.location.href.startsWith('http://localhost')) {
       this.fetchApi();
     }
