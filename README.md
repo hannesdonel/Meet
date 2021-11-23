@@ -15,7 +15,7 @@ This is a serverless PWA that provides information on coding events in a specifi
 - AWS Lambda
 - Serverless
 - Recharts
-- Axios
+- axios
 
 I tracked the apps performance with <b>Atatus</b>.<br>
 The app passes <a href="https://developers.google.com/web/tools/lighthouse/">Lighthouse’s PWA checklist.<a>
