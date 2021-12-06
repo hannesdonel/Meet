@@ -1,6 +1,6 @@
 # Meet
 
-This is a serverless PWA that provides information on coding events in a specific town taken from a fictitious Google event calendar. All data is visualized with two beautiful, clickable charts. <b>This app won't alter any of your calendars nor take or read any information off your calender.</b>
+This is a serverless PWA that provides information on coding events in a specific town taken from a fictitious Google event calendar. All data is visualized with two beautiful, clickable charts. <b>This app won't alter any of your calendars nor take or read any information off your calendar.</b>
 
 <a href="https://hannesdonel.github.io/Meet/">Try the app in action.</a>
 
